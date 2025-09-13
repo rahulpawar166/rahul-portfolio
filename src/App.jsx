@@ -58,7 +58,7 @@ export default function PortfolioAppleStyle() {
 
   // Featured & Blocklisted repos per request
   const FEATURED_REPOS = ["RestSync", "iSEN"];
-  const BLOCKLIST_REPOS = new Set(["Eulerity", "Swift XCTest Demo Project", "Swift-XCTest-Demo-Project"]);
+  const BLOCKLIST_REPOS = new Set(["Eulerity", "Swift XCTest Demo Project", "Swift-XCTest-Demo-Project", "rahul-portfolio", "Rahul-Portfolio"]);
 
   /* ——— MEDIUM ——— */
   const [articles, setArticles] = useState([]);
@@ -420,18 +420,88 @@ ${message}`;
 
   function ProjectCard({ repo }) {
     const updated = repo.pushed_at ? new Date(repo.pushed_at) : null;
-    const updatedFmt = updated ? updated.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: '2-digit' }) : "";
+    const updatedFmt = updated
+      ? updated.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: '2-digit' })
+      : "";
+
+    // Build tags: language, tech, platform (best-effort from name/description)
+    const tags = (() => {
+      const arr = [];
+      const lang = repo.language?.toString();
+      const name = (repo.name || '').toLowerCase();
+      const desc = (repo.description || '').toLowerCase();
+
+      // Language
+      if (lang) arr.push(lang);
+
+      // Tech stack hints from description/name
+      if (/swiftui/.test(desc) || /swiftui/.test(name)) arr.push('SwiftUI');
+      if (/combine\b/.test(desc)) arr.push('Combine');
+      if (/concurrency|async\b|await\b/.test(desc)) arr.push('Swift Concurrency');
+      if (/kotlin/.test(desc) || /kotlin/.test(name)) arr.push('Kotlin');
+      if (/react\b|reactjs|react\.js/.test(desc) || /react/.test(name)) arr.push('React');
+      if (/node\b|express\b/.test(desc)) arr.push('Node');
+      if (/firebase/.test(desc)) arr.push('Firebase');
+
+      // Platform inference (keyword-based, not just language)
+      if (/\bios\b|iphone|ipad/.test(name + ' ' + desc)) arr.push('iOS');
+      if (/swiftui|appkit|macos|mac\s?app/.test(name + ' ' + desc)) arr.push('macOS');
+      if (lang === 'Kotlin' || /android/.test(name + ' ' + desc)) arr.push('Android');
+      if (/react|web|browser|vite|next\.js|nextjs/.test(name + ' ' + desc)) arr.push('Web');
+
+      // Special-case corrections
+      if (name === 'restsync') {
+        // Ensure macOS tag for RestSync
+        arr.push('macOS');
+        // If iOS got inferred elsewhere, remove it
+        const idx = arr.indexOf('iOS');
+        if (idx !== -1) arr.splice(idx, 1);
+      }
+
+      // Deduplicate and limit
+      return Array.from(new Set(arr)).slice(0, 5);
+    })();
+
     return (
-      <motion.a href={repo.html_url || repo.link} target="_blank" rel="noreferrer" whileHover={{ y: -4 }} className="group rounded-2xl border border-black/10 dark:border-white/10 p-5 block">
+      <motion.a
+        href={repo.html_url || repo.link}
+        target="_blank"
+        rel="noreferrer"
+        whileHover={{ y: -4 }}
+        className="group rounded-2xl border border-black/10 dark:border-white/10 p-5 block h-full"
+      >
         <div className="flex items-start justify-between gap-3">
           <div>
             <h3 className="font-medium group-hover:opacity-100 opacity-90">{repo.name}</h3>
-            {repo.language && <p className="text-xs opacity-60 mt-0.5">{repo.language}</p>}
+            {repo.language && (
+              <p className="text-xs opacity-60 mt-0.5">{repo.language}</p>
+            )}
           </div>
-          <span className="text-[11px] rounded-full border border-black/10 dark:border-white/10 px-2 py-0.5 opacity-70">★ {repo.stargazers_count ?? repo.stars ?? 0}</span>
+          <span className="text-[11px] rounded-full border border-black/10 dark:border-white/10 px-2 py-0.5 opacity-70">
+            ★ {repo.stargazers_count ?? repo.stars ?? 0}
+          </span>
         </div>
-        {repo.description && <p className="text-sm opacity-80 mt-3 line-clamp-3">{repo.description}</p>}
-        {updated && <p className="text-[11px] opacity-60 mt-4">Updated {updatedFmt}</p>}
+        {repo.description && (
+          <p className="text-sm opacity-80 mt-3 line-clamp-3">{repo.description}</p>
+        )}
+
+        {/* Tags */}
+        {tags.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {tags.map((t) => (
+              <span
+                key={t}
+                className="text-[11px] px-2 py-0.5 rounded-full border border-black/10 dark:border-white/10 opacity-80"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {updated && (
+          <p className="text-[11px] opacity-60 mt-4">Updated {updatedFmt}</p>
+        )}
       </motion.a>
     );
   }
@@ -439,10 +509,28 @@ ${message}`;
   function ArticleCard({ article }) {
     const date = article.pubDate ? new Date(article.pubDate) : null;
     const df = date ? date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: '2-digit' }) : "";
+
+    // Extract first <img> from HTML content if available
     const extractFirstImage = (html) => {
       try { const div = document.createElement('div'); div.innerHTML = html || ''; const img = div.querySelector('img'); return img?.getAttribute('src') || null; } catch { return null; }
     };
+
+    // Extract plain text from the article's HTML to use as an excerpt
+    const extractPlainText = (html) => {
+      try { const div = document.createElement('div'); div.innerHTML = html || ''; return (div.textContent || '').replace(/\s+/g, ' ').trim(); } catch { return ''; }
+    };
+
+    // Truncate to a readable length (about 30–40 words)
+    const truncateWords = (text, n = 40) => {
+      const words = text.split(' ');
+      if (words.length <= n) return text;
+      return words.slice(0, n).join(' ') + '…';
+    };
+
     const cover = extractFirstImage(article.content) || article.thumbnail;
+    const plain = extractPlainText(article.content || '');
+    const excerpt = truncateWords(plain, 42);
+
     return (
       <motion.a
         href={article.link}
@@ -458,7 +546,8 @@ ${message}`;
             <div className="w-full h-full bg-gradient-to-br from-neutral-200 to-neutral-400 dark:from-neutral-800 dark:to-neutral-700" />
           )}
         </div>
-        <div className="p-5">
+
+        <div className="p-5 flex flex-col h-full">
           <h3 className="font-medium group-hover:opacity-100 opacity-90 line-clamp-2">{article.title}</h3>
           {df && <p className="text-xs opacity-60 mt-1">{df}</p>}
           {article.categories && article.categories.length > 0 && (
@@ -468,6 +557,22 @@ ${message}`;
               ))}
             </div>
           )}
+
+          {/* Excerpt from the article content */}
+          {excerpt && <p className="mt-3 text-sm opacity-80 leading-relaxed">{excerpt}</p>}
+
+          {/* Show more button */}
+          <a
+            href={article.link}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-4 inline-flex self-start items-center rounded-full px-4 py-1.5 text-sm font-medium
+                       border border-black/10 dark:border-white/10
+                       bg-white/70 dark:bg-neutral-900/70 backdrop-blur
+                       hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition"
+          >
+            Show more →
+          </a>
         </div>
       </motion.a>
     );
