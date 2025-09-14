@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import { motion } from "framer-motion";
+import emailjs from '@emailjs/browser';
 
 // Fallback SVG for experience cover images (neutral gradient)
 const FALLBACK_COVER = `data:image/svg+xml;utf8,\
@@ -395,22 +396,59 @@ const certifications = useMemo(() => [
     const [subject, setSubject] = React.useState("");
     const [message, setMessage] = React.useState("");
     const [err, setErr] = React.useState("");
+    const [sending, setSending] = React.useState(false);
+    const [ok, setOk] = React.useState("");
 
     const onSubmit = (e) => {
       e.preventDefault();
       setErr("");
+      setOk("");
+
       if (!first.trim() || !last.trim() || !email.trim() || !subject.trim() || !message.trim()) {
         setErr("Please fill out all fields.");
         return;
       }
-      const mailto = new URL("mailto:rahulpawar166@gmail.com");
-      mailto.searchParams.set("subject", subject);
-      const body = `From: ${first} ${last}
-Email: ${email}
 
-${message}`;
-      mailto.searchParams.set("body", body);
-      window.location.href = mailto.toString();
+      // Send directly from the site using EmailJS
+      // 1) Install: npm i @emailjs/browser
+      // 2) Create a service + template at https://dashboard.emailjs.com/
+      // 3) Add these to .env (Vite):
+      //    VITE_EMAILJS_SERVICE_ID=your_service_id
+      //    VITE_EMAILJS_TEMPLATE_ID=your_template_id
+      //    VITE_EMAILJS_PUBLIC_KEY=your_public_key
+      const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+      if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+        setErr("Email service is not configured. Please add EmailJS keys to .env.");
+        return;
+      }
+
+      setSending(true);
+      emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          from_first: first,
+          from_last: last,
+          from_email: email,
+          subject,
+          message,
+          to_name: 'Rahul Pawar',
+          to_email: 'rahulpawar166@gmail.com',
+        },
+        { publicKey: PUBLIC_KEY }
+      )
+      .then(() => {
+        setOk("Thanks! Your email was sent.");
+        setFirst(""); setLast(""); setEmail(""); setSubject(""); setMessage("");
+      })
+      .catch((e) => {
+        setErr("Failed to send. Please try again in a moment.");
+        console.error("EmailJS error", e);
+      })
+      .finally(() => setSending(false));
     };
 
     return (
@@ -436,16 +474,18 @@ ${message}`;
           <textarea value={message} onChange={(e) => setMessage(e.target.value)} rows={6} className="mt-1 w-full rounded-xl border border-black/10 dark:border-white/10 bg-white/60 dark:bg-neutral-900/60 px-3 py-2 outline-none focus:ring-2 focus:ring-black/20 dark:focus:ring-white/20" placeholder="Write your message here..." />
         </div>
         {err && <div className="sm:col-span-2 text-sm text-red-500">{err}</div>}
+        {ok && <div className="sm:col-span-2 text-sm text-green-600">{ok}</div>}
         <div className="sm:col-span-2 flex items-center justify-center mt-2">
           <button
             type="submit"
+            disabled={sending}
             className="inline-flex items-center justify-center rounded-full px-7 py-3.5 text-base font-medium
                        bg-gradient-to-r from-neutral-900 via-black to-neutral-800 text-white
                        dark:from-white dark:via-neutral-200 dark:to-neutral-300 dark:text-black
                        shadow-lg shadow-black/20 dark:shadow-white/10 border border-black/10 dark:border-white/10
-                       hover:scale-[1.02] active:scale-[0.98] transition"
+                       hover:scale-[1.02] active:scale-[0.98] transition disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Send Email
+            {sending ? 'Sending…' : 'Send Email'}
           </button>
         </div>
       </form>
