@@ -226,6 +226,7 @@ const certifications = useMemo(() => [
               <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">Rahul Pawar</h1>
               <p className="text-sm opacity-80">iOS/macOS Engineer · Swift | SwiftUI · Minimal, Apple‑quality experiences</p>
               <div className="mt-3 flex flex-wrap gap-3">
+                <a href="https://www.linkedin.com/in/rahulpawar41/" target="_blank" rel="noreferrer" className="rounded-xl border border-black/10 dark:border-white/10 px-3 py-1.5 text-sm hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition">LinkedIn</a>
                 <a href="https://github.com/rahulpawar166" target="_blank" rel="noreferrer" className="rounded-xl border border-black/10 dark:border-white/10 px-3 py-1.5 text-sm hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition">GitHub</a>
                 <a href="https://medium.com/@rahulpawar166" target="_blank" rel="noreferrer" className="rounded-xl border border-black/10 dark:border-white/10 px-3 py-1.5 text-sm hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition">Medium</a>
                 <a href="mailto:rahulpawar166@gmail.com" className="rounded-xl border border-black/10 dark:border-white/10 px-3 py-1.5 text-sm hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition">Email</a>
