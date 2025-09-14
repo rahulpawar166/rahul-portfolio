@@ -32,7 +32,7 @@ export default function PortfolioAppleStyle() {
     localStorage.setItem("rahul-theme", isDark ? "dark" : "light");
   }, [isDark]);
 
-  
+
 
   /* ——— GITHUB ——— */
   const [repos, setRepos] = useState([]);
@@ -142,6 +142,41 @@ export default function PortfolioAppleStyle() {
     { group: "Platforms", items: ["iOS", "macOS", "Android", "AWS", "Firebase", "Crashlytics", "Docker", "MongoDB", "React"] },
   ], []);
 
+  // ——— EDUCATION & CERTIFICATIONS DATA ———
+const education = useMemo(() => [
+  {
+    school: "Stevens Institute of Technology",
+    degree: "M.S. in Computer Science",
+    period: "2021 – 2023",
+    location: "Hoboken, NJ, USA",
+    logo: "/images/stevens.png",
+    details: [],
+  },
+  {
+    school: "Lokmanya Tilak College of Engineering",
+    degree: "B.E. in Computer Engineering",
+    period: "2016 – 2020",
+    location: "Navi Mumbai, India",
+    logo: "/images/ltce.png",
+    details: [],
+  },
+], []);
+
+const certifications = useMemo(() => [
+  { title: "iOS Development", file: "/certs/iOS Development (Udemy).pdf" },
+  { title: "Deep Learning", file: "/certs/Deep Learning (Udemy).pdf" },
+  { title: "Machine Learning", file: "/certs/Machine Learning (Udemy).pdf" },
+  { title: "Flutter Development", file: "/certs/Flutter Development (Udemy).pdf" },
+  { title: "Web Development", file: "/certs/Web Development (Udemy).jpeg" },
+  { title: "Seva Tech Internship", file: "/certs/Seva_Tech_Internship.jpg" },
+  { title: "Core JAVA", file: "/certs/Core Java (SEED).pdf" },
+  { title: "Advanced JAVA Programming", file: "/certs/Advanced Java Programming (SEED).pdf" },
+  { title: "Image Processing", file: "/certs/Image Processing (Udemy).pdf" },
+  { title: "IoT", file: "/certs/Internet of Things_Training (Internshala).pdf" },
+  { title: "Javascript Algorithmic Scripting", file: "/certs/JavaScript (Udemy).pdf" },
+  { title: "Python competency - Entry Level I ", file: "/certs/Python (MU).pdf" },
+], []);
+
   return (
     <div className="min-h-screen bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 antialiased selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
       {/* NAV */}
@@ -155,6 +190,8 @@ export default function PortfolioAppleStyle() {
             <a href="#writing" className="hover:opacity-100">Writing</a>
             <a href="#experience" className="hover:opacity-100">Experience</a>
             <a href="#projects" className="hover:opacity-100">Projects</a>
+            <a href="#education" className="hover:opacity-100">Education</a>
+            <a href="#certifications" className="hover:opacity-100">Certifications</a>
             <a href="#skills" className="hover:opacity-100">Skills</a>
             <a href="#contact" className="hover:opacity-100">Contact</a>
           </nav>
@@ -182,7 +219,7 @@ export default function PortfolioAppleStyle() {
               src="/images/rahul-profile.jpg"
               alt="Rahul Pawar"
               className="h-24 w-24 sm:h-32 sm:w-32 rounded-2xl object-cover border-4 border-white dark:border-neutral-950 shadow"
-              onError={(e)=>{e.currentTarget.style.display='none'}}
+              onError={(e) => { e.currentTarget.style.display = 'none' }}
             />
             <div className="pb-2">
               <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">Rahul Pawar</h1>
@@ -278,6 +315,45 @@ export default function PortfolioAppleStyle() {
           );
         })()}
       </section>
+
+      {/* EDUCATION */}
+<section id="education" className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
+  <SectionHeader title="Education" subtitle="Degrees, highlights, and coursework" />
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {education.map((ed, i) => (
+      <article key={i} className="rounded-2xl border border-black/10 dark:border-white/10 p-5 flex gap-4">
+        <div className="shrink-0 h-14 w-14 rounded-xl overflow-hidden bg-neutral-100 dark:bg-neutral-900 border border-black/10 dark:border-white/10">
+          <img
+            src={ed.logo}
+            alt={`${ed.school} logo`}
+            className="h-full w-full object-contain p-1.5"
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+          />
+        </div>
+        <div>
+          <h3 className="font-medium">{ed.school}</h3>
+          <p className="text-sm opacity-80">{ed.degree}</p>
+          <p className="text-xs opacity-60 mt-0.5">{ed.period} · {ed.location}</p>
+          {ed.details?.length > 0 && (
+            <ul className="mt-3 space-y-1.5 text-sm opacity-90 list-disc pl-5">
+              {ed.details.map((d, idx) => <li key={idx}>{d}</li>)}
+            </ul>
+          )}
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+{/* CERTIFICATIONS */}
+<section id="certifications" className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
+  <SectionHeader title="Certifications" subtitle="Selected certificates (PDF)" />
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {certifications.map((c, i) => (
+      <CertificateCard key={i} cert={c} />
+    ))}
+  </div>
+</section>
 
       {/* SKILLS */}
       <section id="skills" className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
@@ -577,6 +653,47 @@ ${message}`;
       </motion.a>
     );
   }
+
+  
+function CertificateCard({ cert }) {
+  const file = cert.file;
+  const ext = (file.split('.').pop() || '').toLowerCase();
+  const isImage = ['png', 'jpg', 'jpeg', 'webp'].includes(ext);
+  const isPDF = ext === 'pdf';
+
+  const label = isPDF ? 'PDF · Click to view' : 'Image · Click to view';
+
+  return (
+    <a
+      href={file}
+      target="_blank"
+      rel="noreferrer"
+      className="group rounded-2xl border border-black/10 dark:border-white/10 overflow-hidden block"
+    >
+      <div className="aspect-[4/3] w-full bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center">
+        {isImage ? (
+          <img
+            src={file}
+            alt={`${cert.title} thumbnail`}
+            className="max-h-full max-w-full object-contain p-4"
+          />
+        ) : (
+          <img
+            src="/images/pdf_placeholder.webp"
+            alt="PDF placeholder"
+            className="max-h-full max-w-full object-contain p-4"
+          />
+        )}
+      </div>
+      <div className="p-4">
+        <h4 className="font-medium group-hover:opacity-100 opacity-90 line-clamp-2">
+          {cert.title}
+        </h4>
+        <p className="text-xs opacity-70 mt-1">{label}</p>
+      </div>
+    </a>
+  );
+}
 }
 
 /* ——— FALLBACKS ——— */
