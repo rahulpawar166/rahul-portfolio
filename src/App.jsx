@@ -347,12 +347,12 @@ const certifications = useMemo(() => [
 
 {/* CERTIFICATIONS */}
 <section id="certifications" className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
-  <SectionHeader title="Certifications" subtitle="Selected certificates (PDF)" />
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    {certifications.map((c, i) => (
-      <CertificateCard key={i} cert={c} />
-    ))}
-  </div>
+<SectionHeader title="Certifications" subtitle="Official creds you can view & download" />
+  <Carousel size="sm">
+  {certifications.map((c, i) => (
+    <CertificateCard key={i} cert={c} />
+  ))}
+</Carousel>
 </section>
 
       {/* SKILLS */}
@@ -466,12 +466,15 @@ ${message}`;
     return <div className="mb-4 text-xs rounded-xl border border-black/10 dark:border-white/10 p-3 opacity-80">{text}</div>;
   }
 
-  function Carousel({ children }) {
+  function Carousel({ children,  size = 'md' }) {
     const scrollerRef = useRef(null);
     const scrollBy = (dir) => {
       const el = scrollerRef.current; if (!el) return;
       el.scrollBy({ left: dir * Math.min(el.clientWidth, 640), behavior: 'smooth' });
     };
+    const gridClass = size === 'sm'
+      ? 'grid auto-cols-[70%] sm:auto-cols-[46%] lg:auto-cols-[28%] grid-flow-col gap-4 items-stretch'
+      : 'grid auto-cols-[85%] sm:auto-cols-[60%] lg:auto-cols-[33%] grid-flow-col gap-4 items-stretch';
     return (
       <div className="relative">
         <div className="flex items-center justify-between mb-3">
@@ -482,7 +485,7 @@ ${message}`;
           </div>
         </div>
         <div ref={scrollerRef} className="overflow-x-auto snap-x snap-mandatory no-scrollbar">
-          <div className="grid auto-cols-[85%] sm:auto-cols-[60%] lg:auto-cols-[33%] grid-flow-col gap-4 items-stretch">
+          <div className={gridClass}>
             {React.Children.map(children, (c, i) => (
               <div key={i} className="snap-center">
                 {c}
@@ -670,26 +673,26 @@ function CertificateCard({ cert }) {
       rel="noreferrer"
       className="group rounded-2xl border border-black/10 dark:border-white/10 overflow-hidden block"
     >
-      <div className="aspect-[4/3] w-full bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center">
+      <div className="aspect-[16/9] w-full bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center">
         {isImage ? (
           <img
             src={file}
             alt={`${cert.title} thumbnail`}
-            className="max-h-full max-w-full object-contain p-4"
+            className="max-h-full max-w-full object-contain p-3"
           />
         ) : (
           <img
             src="/images/pdf_placeholder.webp"
             alt="PDF placeholder"
-            className="max-h-full max-w-full object-contain p-4"
+            className="max-h-full max-w-full object-contain p-3"
           />
         )}
       </div>
-      <div className="p-4">
-        <h4 className="font-medium group-hover:opacity-100 opacity-90 line-clamp-2">
+      <div className="p-3">
+        <h4 className="font-medium text-sm group-hover:opacity-100 opacity-90 line-clamp-2">
           {cert.title}
         </h4>
-        <p className="text-xs opacity-70 mt-1">{label}</p>
+        <p className="text-[11px] opacity-70 mt-1">{label}</p>
       </div>
     </a>
   );
