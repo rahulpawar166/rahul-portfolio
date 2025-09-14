@@ -293,7 +293,7 @@ const certifications = useMemo(() => [
 
       {/* 3) PROJECTS — NO IMAGES */}
       <section id="projects" className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
-        <SectionHeader title="Projects" subtitle="Selected GitHub work (auto‑fetched)" />
+        <SectionHeader title="Projects" subtitle="Shipped code & experiments worth a peek" />
         {repoError && <InlineNote text={`GitHub fetch issue: ${repoError}. Showing a subset if available.`} />}
         {(() => {
           const list = (repos.length ? repos : demoRepos)
@@ -549,16 +549,13 @@ ${message}`;
         whileHover={{ y: -4 }}
         className="group rounded-2xl border border-black/10 dark:border-white/10 p-5 block h-full"
       >
-        <div className="flex items-start justify-between gap-3">
+        <div className="flex items-start justify-start gap-3">
           <div>
             <h3 className="font-medium group-hover:opacity-100 opacity-90">{repo.name}</h3>
             {repo.language && (
               <p className="text-xs opacity-60 mt-0.5">{repo.language}</p>
             )}
           </div>
-          <span className="text-[11px] rounded-full border border-black/10 dark:border-white/10 px-2 py-0.5 opacity-70">
-            ★ {repo.stargazers_count ?? repo.stars ?? 0}
-          </span>
         </div>
         {repo.description && (
           <p className="text-sm opacity-80 mt-3 line-clamp-3">{repo.description}</p>
