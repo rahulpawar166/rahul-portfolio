@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
-import { motion } from "framer-motion";
 import emailjs from '@emailjs/browser';
 
 // Fallback SVG for experience cover images (neutral gradient)
@@ -20,6 +19,8 @@ const FALLBACK_COVER = `data:image/svg+xml;utf8,\
 // and use provided profile image at /images/rahul-profile.jpg
 
 export default function PortfolioAppleStyle() {
+  const RESUME_URL = "/resume/Rahul_Pawar_Resume.pdf";
+
   /* ——— THEME ——— */
   const [isDark, setIsDark] = useState(() => {
     if (typeof window === "undefined") return true;
@@ -86,19 +87,44 @@ export default function PortfolioAppleStyle() {
   }, []);
 
   /* ——— RESUME‑DRIVEN DATA ——— */
+  const resumeHighlights = useMemo(() => [
+    "Senior iOS Developer leading SwiftUI, platform architecture, releases, and mobile AI tooling.",
+    "Built real-time sync with Swift Concurrency and Combine, improving responsiveness by 30%.",
+    "Created Claude Code agent skills and PR review automation used by the mobile team.",
+    "Ships across iOS, macOS, Android, backend, and AI-assisted developer workflows.",
+  ], []);
+
+  const featuredProjects = useMemo(() => [
+    {
+      name: "RestSync",
+      type: "macOS menubar app",
+      description: "A SwiftUI break reminder inspired by the 20-20-20 rule, designed around macOS HIG, accessibility, and a minimal daily-use footprint.",
+      tags: ["SwiftUI", "macOS", "Accessibility"],
+      link: "https://github.com/rahulpawar166",
+    },
+    {
+      name: "CompanionKit",
+      type: "Xcode Source Editor Extension",
+      description: "An OpenAI-powered Xcode extension for refactoring code, finding bugs, and explaining selected code without leaving the IDE.",
+      tags: ["Swift", "XcodeKit", "OpenAI API"],
+      link: "https://github.com/rahulpawar166",
+    },
+  ], []);
+
   const experience = useMemo(() => [
     {
-      role: "iOS Developer",
+      role: "Senior iOS Developer",
       company: "Eulerity, NY, USA",
       period: "Feb 2023 – Present",
       cover: "/images/eulerity.png",
       sentences: [
-        "I lead the iOS development effort day‑to‑day: planning sprints, unblocking engineers, and reviewing PRs with a strong focus on architecture and readability. The goal is fast iteration without regressions, so I pair code owners with targeted test plans and automated checks to keep velocity high and quality consistent.",
-        "I partner closely with backend, design, and product to deliver features end‑to‑end. From API shape and error states to motion, haptics, and empty‑state copy, I ensure the experience is coherent and polished across the entire flow, not just individual screens.",
-        "I championed MVVM across the app and introduced a small set of conventions (bindable view models, dependency injection boundaries, and view composition guidelines). This reduced rewrite churn and context switching, improving team productivity by ~20% and making new‑feature onboarding far smoother.",
-        "I migrated third‑party dependencies from CocoaPods to Swift Package Manager, simplifying dependency graphs and CI setup. Build times dropped by ~25% on average and we removed an entire class of integration issues related to podspec drift.",
-        "I designed and shipped a real‑time data sync layer using Swift Concurrency and Combine. It coalesces updates, debounces bursty network traffic, and guarantees main‑thread UI delivery—resulting in a more responsive app and fewer data consistency bugs across screens.",
-        "I own App Store releases end‑to‑end: versioning, release notes, TestFlight rollout, phased release, and post‑ship monitoring. I’m also guiding a measured transition to SwiftUI, establishing patterns that interoperate cleanly with UIKit so we can modernize UI without risking stability."
+        "Lead iOS development across feature implementation, architecture, code quality, and App Store releases for a production mobile platform.",
+        "Led a multi-phase app transformation across iOS, Android, and backend, shipping delta banners, pulse indicators, guided tours, pull-to-refresh freshness timestamps, and feature-flagged platform parity.",
+        "Led the full transition to SwiftUI and established it as the team standard, making subsequent product work faster and more consistent.",
+        "Built Claude Code agent skills, phase-aware PR review automation with Jira and Figma MCP integration, and Xcode agentic AI configuration for the mobile team.",
+        "Implemented a real-time data sync system with Swift Concurrency and Combine, improving responsiveness by 30% and reducing data-related issues by 20%.",
+        "Improved team productivity by 20% through MVVM conventions, replaced CocoaPods with Swift Package Manager for 25% faster builds, and authored the iOS code review standard.",
+        "Contribute across platforms by delivering Android features with Kotlin, XML, and Jetpack Compose while partnering with recruiting on mobile engineering candidates."
       ],
     },
     {
@@ -137,28 +163,29 @@ export default function PortfolioAppleStyle() {
   ], []);
 
   const skills = useMemo(() => [
-    { group: "Languages", items: ["Swift", "SwiftUI", "Objective‑C", "Kotlin", "Python", "Java", "C/C++", "JavaScript", "SQL"] },
-    { group: "Frameworks", items: ["XCTest", "Swift Testing", "Concurrency", "Combine", "KIF", "EarlGrey", "Swinject", "Core Data"] },
-    { group: "Tools", items: ["Xcode", "TestFlight", "SPM", "CocoaPods", "Android Studio", "Figma", "App Store Connect"] },
-    { group: "Platforms", items: ["iOS", "macOS", "Android", "AWS", "Firebase", "Crashlytics", "Docker", "MongoDB", "React"] },
+    { group: "Languages", items: ["Swift", "Objective-C", "Kotlin", "Python", "Java", "C", "C++", "JavaScript", "SQL"] },
+    { group: "Apple Platforms", items: ["iOS", "iPadOS", "macOS", "watchOS", "SwiftUI", "UIKit", "XcodeKit", "HealthKit"] },
+    { group: "Frameworks", items: ["Swift Concurrency", "Combine", "Core Data", "XCTest", "Swift Testing", "KIF", "EarlGrey", "Swinject"] },
+    { group: "Tools", items: ["Xcode", "App Store Connect", "TestFlight", "SPM", "CocoaPods", "Android Studio", "Figma", "CI/CD"] },
+    { group: "AI & Backend", items: ["Xcode Agentic AI", "Claude Code", "MCP", "Codex", "GitHub Copilot", "OpenAI API", "Firebase", "AWS", "Docker", "MongoDB", "React"] },
   ], []);
 
   // ——— EDUCATION & CERTIFICATIONS DATA ———
 const education = useMemo(() => [
   {
-    school: "Stevens Institute of Technology",
-    degree: "M.S. in Computer Science",
-    period: "2021 – 2023",
-    location: "Hoboken, NJ, USA",
-    logo: "/images/stevens.png",
+    school: "New England College",
+    degree: "M.S. in Artificial Intelligence",
+    period: "Jan 2026 – Present",
+    location: "New Hampshire, USA",
+    logo: "/images/new-england-college-shield.png",
     details: [],
   },
   {
-    school: "Lokmanya Tilak College of Engineering",
-    degree: "B.E. in Computer Engineering",
-    period: "2016 – 2020",
-    location: "Navi Mumbai, India",
-    logo: "/images/ltce.png",
+    school: "Stevens Institute of Technology",
+    degree: "M.S. in Computer Science",
+    period: "Aug 2021 – May 2023",
+    location: "New Jersey, USA",
+    logo: "/images/stevens.png",
     details: [],
   },
 ], []);
@@ -179,15 +206,16 @@ const certifications = useMemo(() => [
 ], []);
 
   return (
-    <div className="min-h-screen bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 antialiased selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
+    <div className="min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(20,184,166,0.16),transparent_34%),linear-gradient(135deg,#f8fafc_0%,#eef2ff_46%,#f8fafc_100%)] text-neutral-950 dark:bg-[radial-gradient(circle_at_top_left,rgba(45,212,191,0.12),transparent_30%),linear-gradient(135deg,#020617_0%,#111827_48%,#18181b_100%)] dark:text-neutral-100 antialiased selection:bg-teal-900 selection:text-white dark:selection:bg-teal-200 dark:selection:text-neutral-950">
       {/* NAV */}
-      <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-neutral-900/50 border-b border-black/5 dark:border-white/5">
+      <header className="sticky top-0 z-50 border-b border-black/5 bg-white/70 backdrop-blur-xl supports-[backdrop-filter]:bg-white/70 dark:border-white/10 dark:bg-neutral-950/60 dark:supports-[backdrop-filter]:bg-neutral-950/60">
         <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img src="/images/rahul-profile.jpg" alt="Rahul Pawar" className="h-7 w-7 rounded-full object-cover border border-black/10 dark:border-white/10" onError={(e) => { e.currentTarget.style.display = 'none' }} />
             <span className="font-semibold tracking-tight">Rahul Pawar</span>
           </div>
           <nav className="hidden sm:flex items-center gap-6 text-sm opacity-80">
+            <a href="#resume" className="hover:opacity-100">Resume</a>
             <a href="#writing" className="hover:opacity-100">Writing</a>
             <a href="#experience" className="hover:opacity-100">Experience</a>
             <a href="#projects" className="hover:opacity-100">Projects</a>
@@ -196,7 +224,7 @@ const certifications = useMemo(() => [
             <a href="#skills" className="hover:opacity-100">Skills</a>
             <a href="#contact" className="hover:opacity-100">Contact</a>
           </nav>
-          <button aria-label="Toggle dark mode" className="rounded-2xl border border-black/10 dark:border-white/10 px-3 py-1 text-xs hover:scale-[1.02] active:scale-[0.98] transition" onClick={() => setIsDark((v) => !v)}>
+          <button aria-label="Toggle dark mode" className="rounded-full border border-black/10 bg-white/60 px-3 py-1 text-xs shadow-sm transition hover:scale-[1.02] active:scale-[0.98] dark:border-white/10 dark:bg-white/10" onClick={() => setIsDark((v) => !v)}>
             {isDark ? "Light" : "Dark"}
           </button>
         </div>
@@ -204,34 +232,60 @@ const certifications = useMemo(() => [
 
       {/* HERO */}
       <section id="cover" className="relative">
+        <div className="absolute inset-x-0 top-0 h-24 bg-white/35 blur-3xl dark:bg-teal-400/10" />
         {/* LinkedIn‑style cover image */}
-        <div className="relative z-0 w-full h-56 sm:h-72 md:h-80 lg:h-[22rem] rounded-b-3xl overflow-hidden border-b border-black/10 dark:border-white/10 bg-neutral-200 dark:bg-neutral-900">
+        <div className="relative z-0 mx-auto mt-4 h-56 w-[calc(100%-2rem)] max-w-6xl overflow-hidden rounded-[2rem] border border-white/70 bg-neutral-200 shadow-2xl shadow-slate-300/40 dark:border-white/10 dark:bg-neutral-900 dark:shadow-black/30 sm:h-72 md:h-80 lg:h-[22rem]">
           <img
             src="/images/cover.png"
             alt="Cover"
-            className="absolute inset-0 w-full h-full object-contain"
+            className="absolute inset-0 h-full w-full object-contain"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/5 to-transparent dark:from-neutral-950/80 dark:via-neutral-950/10" />
         </div>
 
         {/* Profile overlay */}
         <div className="relative z-10 mx-auto max-w-6xl px-4">
-          <div className="mt-6 sm:mt-8 flex items-end gap-4">
+          <div className="-mt-12 flex flex-col gap-5 rounded-[2rem] border border-white/80 bg-white/75 p-5 shadow-xl shadow-slate-300/40 backdrop-blur-xl dark:border-white/10 dark:bg-neutral-950/70 dark:shadow-black/30 sm:flex-row sm:items-end sm:p-6">
             <img
               src="/images/rahul-profile.jpg"
               alt="Rahul Pawar"
-              className="h-24 w-24 sm:h-32 sm:w-32 rounded-2xl object-cover border-4 border-white dark:border-neutral-950 shadow"
+              className="h-24 w-24 rounded-3xl border-4 border-white object-cover shadow-lg dark:border-neutral-900 sm:h-32 sm:w-32"
               onError={(e) => { e.currentTarget.style.display = 'none' }}
             />
-            <div className="pb-2">
-              <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">Rahul Pawar</h1>
-              <p className="text-sm opacity-80">iOS/macOS Engineer · Swift | SwiftUI · Minimal, Apple‑quality experiences</p>
+            <div className="pb-1">
+              <p className="text-xs font-medium uppercase tracking-[0.22em] text-teal-700 dark:text-teal-300">Senior iOS Developer</p>
+              <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-5xl">Rahul Pawar</h1>
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-neutral-700 dark:text-neutral-300 sm:text-base">SwiftUI-focused mobile engineer building production Apple platform experiences, AI-assisted developer tooling, and reliable release systems across iOS, macOS, and Android.</p>
               <div className="mt-3 flex flex-wrap gap-3">
-                <a href="https://www.linkedin.com/in/rahulpawar41/" target="_blank" rel="noreferrer" className="rounded-xl border border-black/10 dark:border-white/10 px-3 py-1.5 text-sm hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition">LinkedIn</a>
-                <a href="https://github.com/rahulpawar166" target="_blank" rel="noreferrer" className="rounded-xl border border-black/10 dark:border-white/10 px-3 py-1.5 text-sm hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition">GitHub</a>
-                <a href="https://medium.com/@rahulpawar166" target="_blank" rel="noreferrer" className="rounded-xl border border-black/10 dark:border-white/10 px-3 py-1.5 text-sm hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition">Medium</a>
-                <a href="mailto:rahulpawar166@gmail.com" className="rounded-xl border border-black/10 dark:border-white/10 px-3 py-1.5 text-sm hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition">Email</a>
+                <a href={RESUME_URL} target="_blank" rel="noreferrer" className="rounded-full bg-neutral-950 px-4 py-2 text-sm font-medium text-white shadow-lg shadow-neutral-950/20 transition hover:-translate-y-0.5 dark:bg-white dark:text-neutral-950">View Resume</a>
+                <a href={RESUME_URL} download className="rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15">Download PDF</a>
+                <a href="https://www.linkedin.com/in/rahulpawar41/" target="_blank" rel="noreferrer" className="rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm transition hover:-translate-y-0.5 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15">LinkedIn</a>
+                <a href="https://github.com/rahulpawar166" target="_blank" rel="noreferrer" className="rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm transition hover:-translate-y-0.5 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15">GitHub</a>
+                <a href="mailto:rahulpawar166@gmail.com" className="rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm transition hover:-translate-y-0.5 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15">Email</a>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* RESUME */}
+      <section id="resume" className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
+        <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+          <div className="rounded-[2rem] border border-white/80 bg-white/75 p-6 shadow-xl shadow-slate-300/30 backdrop-blur-xl dark:border-white/10 dark:bg-white/10 dark:shadow-black/20 sm:p-8">
+            <SectionHeader title="Resume" subtitle="Updated from the latest PDF" />
+            <p className="text-sm leading-7 text-neutral-700 dark:text-neutral-300">Focused on senior iOS work, SwiftUI migration, AI-assisted engineering workflows, release ownership, cross-platform delivery, and production-quality mobile architecture.</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a href={RESUME_URL} target="_blank" rel="noreferrer" className="rounded-full bg-teal-700 px-4 py-2 text-sm font-medium text-white shadow-lg shadow-teal-700/20 transition hover:-translate-y-0.5 dark:bg-teal-300 dark:text-neutral-950">Open resume</a>
+              <a href={RESUME_URL} download className="rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15">Download</a>
+            </div>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {resumeHighlights.map((item, i) => (
+              <div key={item} className="rounded-3xl border border-white/80 bg-white/70 p-5 shadow-lg shadow-slate-300/20 backdrop-blur-xl dark:border-white/10 dark:bg-white/10 dark:shadow-black/20">
+                <p className="text-xs font-semibold text-teal-700 dark:text-teal-300">0{i + 1}</p>
+                <p className="mt-3 text-sm leading-6 text-neutral-800 dark:text-neutral-200">{item}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -258,7 +312,7 @@ const certifications = useMemo(() => [
               (exp.cover || '').endsWith('.jpg') ? exp.cover.replace('.jpg', '.jpeg') : undefined,
             ].filter(Boolean);
             return (
-              <motion.article key={idx} whileHover={{ y: -4 }} className="rounded-3xl border border-black/10 dark:border-white/10 overflow-hidden">
+              <article key={idx} className="overflow-hidden rounded-[1.75rem] border border-white/80 bg-white/70 shadow-lg shadow-slate-300/25 backdrop-blur-xl transition hover:-translate-y-1 dark:border-white/10 dark:bg-white/10 dark:shadow-black/20">
                 <div className="aspect-[16/7] w-full bg-neutral-100 dark:bg-neutral-900">
                   <img
                     src={candidates[0] || FALLBACK_COVER}
@@ -287,7 +341,7 @@ const certifications = useMemo(() => [
                     ))}
                   </div>
                 </div>
-              </motion.article>
+              </article>
             );
           })}
         </div>
@@ -295,7 +349,27 @@ const certifications = useMemo(() => [
 
       {/* 3) PROJECTS — NO IMAGES */}
       <section id="projects" className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
-        <SectionHeader title="Projects" subtitle="Shipped code & experiments worth a peek" />
+        <SectionHeader title="Projects" subtitle="Native apps, developer tools, and experiments worth a peek" />
+        <div className="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+          {featuredProjects.map((project) => (
+            <a
+              key={project.name}
+              href={project.link}
+              target="_blank"
+              rel="noreferrer"
+              className="group rounded-[1.75rem] border border-white/80 bg-white/75 p-6 shadow-xl shadow-slate-300/25 backdrop-blur-xl transition hover:-translate-y-1 dark:border-white/10 dark:bg-white/10 dark:shadow-black/20"
+            >
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-teal-700 dark:text-teal-300">{project.type}</p>
+              <h3 className="mt-3 text-2xl font-semibold tracking-tight">{project.name}</h3>
+              <p className="mt-3 text-sm leading-6 text-neutral-700 dark:text-neutral-300">{project.description}</p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span key={tag} className="rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs text-neutral-700 dark:border-white/10 dark:bg-white/10 dark:text-neutral-200">{tag}</span>
+                ))}
+              </div>
+            </a>
+          ))}
+        </div>
         {repoError && <InlineNote text={`GitHub fetch issue: ${repoError}. Showing a subset if available.`} />}
         {(() => {
           const list = (repos.length ? repos : demoRepos)
@@ -323,14 +397,18 @@ const certifications = useMemo(() => [
   <SectionHeader title="Education" subtitle="Degrees, highlights, and coursework" />
   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
     {education.map((ed, i) => (
-      <article key={i} className="rounded-2xl border border-black/10 dark:border-white/10 p-5 flex gap-4">
+      <article key={i} className="flex gap-4 rounded-[1.5rem] border border-white/80 bg-white/70 p-5 shadow-lg shadow-slate-300/20 backdrop-blur-xl dark:border-white/10 dark:bg-white/10 dark:shadow-black/20">
         <div className="shrink-0 h-14 w-14 rounded-xl overflow-hidden bg-neutral-100 dark:bg-neutral-900 border border-black/10 dark:border-white/10">
-          <img
-            src={ed.logo}
-            alt={`${ed.school} logo`}
-            className="h-full w-full object-contain p-1.5"
-            onError={(e) => { e.currentTarget.style.display = 'none'; }}
-          />
+          {ed.logo ? (
+            <img
+              src={ed.logo}
+              alt={`${ed.school} logo`}
+              className="h-full w-full object-contain p-1.5"
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center bg-teal-700 text-sm font-semibold text-white dark:bg-teal-300 dark:text-neutral-950">AI</div>
+          )}
         </div>
         <div>
           <h3 className="font-medium">{ed.school}</h3>
@@ -349,12 +427,12 @@ const certifications = useMemo(() => [
 
 {/* CERTIFICATIONS */}
 <section id="certifications" className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
-<SectionHeader title="Certifications" subtitle="Official creds you can view & download" />
-  <Carousel size="sm">
-  {certifications.map((c, i) => (
-    <CertificateCard key={i} cert={c} />
-  ))}
-</Carousel>
+  <SectionHeader title="Certifications" subtitle="Official creds you can view & download" />
+  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    {certifications.map((c, i) => (
+      <CertificateCard key={i} cert={c} />
+    ))}
+  </div>
 </section>
 
       {/* SKILLS */}
@@ -362,7 +440,7 @@ const certifications = useMemo(() => [
         <SectionHeader title="Skills" subtitle="A toolbox tuned for Apple platforms" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {skills.map((s, i) => (
-            <div key={i} className="rounded-2xl border border-black/10 dark:border-white/10 p-5">
+            <div key={i} className="rounded-[1.5rem] border border-white/80 bg-white/70 p-5 shadow-lg shadow-slate-300/20 backdrop-blur-xl dark:border-white/10 dark:bg-white/10 dark:shadow-black/20">
               <h4 className="font-medium mb-3">{s.group}</h4>
               <div className="flex flex-wrap gap-2">
                 {s.items.map((it) => (
@@ -376,7 +454,7 @@ const certifications = useMemo(() => [
 
       {/* CONTACT */}
       <section id="contact" className="mx-auto max-w-6xl px-4 py-16 sm:py-20">
-        <div className="rounded-3xl border border-black/10 dark:border-white/10 p-8 sm:p-12">
+        <div className="rounded-[2rem] border border-white/80 bg-white/75 p-8 shadow-xl shadow-slate-300/30 backdrop-blur-xl dark:border-white/10 dark:bg-white/10 dark:shadow-black/20 sm:p-12">
           <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-center">Send me an Email</h3>
           <p className="mt-3 opacity-80 text-center">Or call/text: <a href="tel:+15516897590" className="underline text-base sm:text-lg font-medium"><span role="img" aria-label="USA flag" className="mr-1 text-lg sm:text-xl align-[-2px]">🇺🇸</span>+1 (551) 689‑7590</a></p>
 
@@ -471,7 +549,7 @@ const certifications = useMemo(() => [
           <input value={subject} onChange={(e) => setSubject(e.target.value)} className="mt-1 w-full rounded-xl border border-black/10 dark:border-white/10 bg-white/60 dark:bg-neutral-900/60 px-3 py-2 outline-none focus:ring-2 focus:ring-black/20 dark:focus:ring-white/20" placeholder="Hello Rahul" />
         </div>
         <div className="sm:col-span-2">
-          <label className="text-xs opacity-70">Email</label>
+          <label className="text-xs opacity-70">Message</label>
           <textarea value={message} onChange={(e) => setMessage(e.target.value)} rows={6} className="mt-1 w-full rounded-xl border border-black/10 dark:border-white/10 bg-white/60 dark:bg-neutral-900/60 px-3 py-2 outline-none focus:ring-2 focus:ring-black/20 dark:focus:ring-white/20" placeholder="Write your message here..." />
         </div>
         {err && <div className="sm:col-span-2 text-sm text-red-500">{err}</div>}
@@ -504,7 +582,7 @@ const certifications = useMemo(() => [
   }
 
   function InlineNote({ text }) {
-    return <div className="mb-4 text-xs rounded-xl border border-black/10 dark:border-white/10 p-3 opacity-80">{text}</div>;
+    return <div className="mb-4 rounded-2xl border border-amber-200 bg-amber-50/80 p-3 text-xs text-amber-900 shadow-sm dark:border-amber-300/20 dark:bg-amber-300/10 dark:text-amber-100">{text}</div>;
   }
 
   function Carousel({ children,  size = 'md' }) {
@@ -521,8 +599,8 @@ const certifications = useMemo(() => [
         <div className="flex items-center justify-between mb-3">
           <div className="opacity-0">.</div>
           <div className="flex gap-2">
-            <button aria-label="Prev" onClick={() => scrollBy(-1)} className="rounded-xl border border-black/10 dark:border-white/10 px-3 py-1 text-xs">◀</button>
-            <button aria-label="Next" onClick={() => scrollBy(1)} className="rounded-xl border border-black/10 dark:border-white/10 px-3 py-1 text-xs">▶</button>
+            <button aria-label="Prev" onClick={() => scrollBy(-1)} className="rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs shadow-sm transition hover:bg-white dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15">◀</button>
+            <button aria-label="Next" onClick={() => scrollBy(1)} className="rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs shadow-sm transition hover:bg-white dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15">▶</button>
           </div>
         </div>
         <div ref={scrollerRef} className="overflow-x-auto snap-x snap-mandatory no-scrollbar">
@@ -583,12 +661,11 @@ const certifications = useMemo(() => [
     })();
 
     return (
-      <motion.a
+      <a
         href={repo.html_url || repo.link}
         target="_blank"
         rel="noreferrer"
-        whileHover={{ y: -4 }}
-        className="group rounded-2xl border border-black/10 dark:border-white/10 p-5 block h-full"
+        className="group block h-full rounded-[1.5rem] border border-white/80 bg-white/70 p-5 shadow-lg shadow-slate-300/20 backdrop-blur-xl transition hover:-translate-y-1 dark:border-white/10 dark:bg-white/10 dark:shadow-black/20"
       >
         <div className="flex items-start justify-start gap-3">
           <div>
@@ -608,7 +685,7 @@ const certifications = useMemo(() => [
             {tags.map((t) => (
               <span
                 key={t}
-                className="text-[11px] px-2 py-0.5 rounded-full border border-black/10 dark:border-white/10 opacity-80"
+                className="rounded-full border border-black/10 bg-white/60 px-2 py-0.5 text-[11px] opacity-80 dark:border-white/10 dark:bg-white/10"
               >
                 {t}
               </span>
@@ -619,7 +696,7 @@ const certifications = useMemo(() => [
         {updated && (
           <p className="text-[11px] opacity-60 mt-4">Updated {updatedFmt}</p>
         )}
-      </motion.a>
+      </a>
     );
   }
 
@@ -649,12 +726,11 @@ const certifications = useMemo(() => [
     const excerpt = truncateWords(plain, 42);
 
     return (
-      <motion.a
+      <a
         href={article.link}
         target="_blank"
         rel="noreferrer"
-        whileHover={{ y: -2 }}
-        className="group rounded-2xl border border-black/10 dark:border-white/10 overflow-hidden block flex flex-col h-full"
+        className="group flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-white/80 bg-white/70 shadow-lg shadow-slate-300/20 backdrop-blur-xl transition hover:-translate-y-0.5 dark:border-white/10 dark:bg-white/10 dark:shadow-black/20"
       >
         <div className="aspect-[16/9] w-full bg-neutral-100 dark:bg-neutral-900">
           {cover ? (
@@ -670,7 +746,7 @@ const certifications = useMemo(() => [
           {article.categories && article.categories.length > 0 && (
             <div className="mt-3 flex flex-wrap gap-2">
               {article.categories.slice(0, 4).map((c) => (
-                <span key={c} className="text-[11px] px-2 py-0.5 rounded-full border border-black/10 dark:border-white/10 opacity-70">{c}</span>
+              <span key={c} className="rounded-full border border-black/10 bg-white/60 px-2 py-0.5 text-[11px] opacity-70 dark:border-white/10 dark:bg-white/10">{c}</span>
               ))}
             </div>
           )}
@@ -679,19 +755,16 @@ const certifications = useMemo(() => [
           {excerpt && <p className="mt-3 text-sm opacity-80 leading-relaxed">{excerpt}</p>}
 
           {/* Show more button */}
-          <a
-            href={article.link}
-            target="_blank"
-            rel="noreferrer"
+          <span
             className="mt-4 inline-flex self-start items-center rounded-full px-4 py-1.5 text-sm font-medium
                        border border-black/10 dark:border-white/10
                        bg-white/70 dark:bg-neutral-900/70 backdrop-blur
                        hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition"
           >
             Show more →
-          </a>
+          </span>
         </div>
-      </motion.a>
+      </a>
     );
   }
 
@@ -709,24 +782,24 @@ function CertificateCard({ cert }) {
       href={file}
       target="_blank"
       rel="noreferrer"
-      className="group rounded-2xl border border-black/10 dark:border-white/10 overflow-hidden block"
+      className="group block h-full overflow-hidden rounded-[1.5rem] border border-white/80 bg-white/70 shadow-lg shadow-slate-300/20 backdrop-blur-xl transition hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-300/30 dark:border-white/10 dark:bg-white/10 dark:shadow-black/20 dark:hover:shadow-black/30"
     >
-      <div className="aspect-[16/9] w-full bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center">
+      <div className="flex aspect-[16/10] w-full items-center justify-center bg-gradient-to-br from-neutral-50 to-neutral-200 dark:from-neutral-900 dark:to-neutral-800">
         {isImage ? (
           <img
             src={file}
             alt={`${cert.title} thumbnail`}
-            className="max-h-full max-w-full object-contain p-3"
+            className="max-h-full max-w-full object-contain p-4"
           />
         ) : (
           <img
             src="/images/pdf_placeholder.webp"
             alt="PDF placeholder"
-            className="max-h-full max-w-full object-contain p-3"
+            className="max-h-full max-w-full object-contain p-4 transition group-hover:scale-105"
           />
         )}
       </div>
-      <div className="p-3">
+      <div className="p-4">
         <h4 className="font-medium text-sm group-hover:opacity-100 opacity-90 line-clamp-2">
           {cert.title}
         </h4>
