@@ -90,7 +90,7 @@ export default function PortfolioAppleStyle() {
   const resumeHighlights = useMemo(() => [
     "Senior iOS Developer leading SwiftUI, platform architecture, releases, and mobile AI tooling.",
     "Built real-time sync with Swift Concurrency and Combine, improving responsiveness by 30%.",
-    "Created Claude Code agent skills and PR review automation used by the mobile team.",
+    "Created Claude Code agent skills, PR review automation, and Jenkins-backed XCTest workflows.",
     "Ships across iOS, macOS, Android, backend, and AI-assisted developer workflows.",
   ], []);
 
@@ -124,6 +124,7 @@ export default function PortfolioAppleStyle() {
         "Built Claude Code agent skills, phase-aware PR review automation with Jira and Figma MCP integration, and Xcode agentic AI configuration for the mobile team.",
         "Implemented a real-time data sync system with Swift Concurrency and Combine, improving responsiveness by 30% and reducing data-related issues by 20%.",
         "Improved team productivity by 20% through MVVM conventions, replaced CocoaPods with Swift Package Manager for 25% faster builds, and authored the iOS code review standard.",
+        "Leveraged Jenkins to automate XCTest unit test execution, improving code quality and reducing manual testing effort.",
         "Contribute across platforms by delivering Android features with Kotlin, XML, and Jetpack Compose while partnering with recruiting on mobile engineering candidates."
       ],
     },
@@ -166,8 +167,8 @@ export default function PortfolioAppleStyle() {
     { group: "Languages", items: ["Swift", "Objective-C", "Kotlin", "Python", "Java", "C", "C++", "JavaScript", "SQL"] },
     { group: "Apple Platforms", items: ["iOS", "iPadOS", "macOS", "watchOS", "SwiftUI", "UIKit", "XcodeKit", "HealthKit"] },
     { group: "Frameworks", items: ["Swift Concurrency", "Combine", "Core Data", "XCTest", "Swift Testing", "KIF", "EarlGrey", "Swinject"] },
-    { group: "Tools", items: ["Xcode", "App Store Connect", "TestFlight", "SPM", "CocoaPods", "Android Studio", "Figma", "CI/CD"] },
-    { group: "AI & Backend", items: ["Xcode Agentic AI", "Claude Code", "MCP", "Codex", "GitHub Copilot", "OpenAI API", "Firebase", "AWS", "Docker", "MongoDB", "React"] },
+    { group: "Tools", items: ["Xcode", "App Store Connect", "TestFlight", "SPM", "CocoaPods", "Android Studio", "Figma", "Jenkins", "CI/CD"] },
+    { group: "AI & Backend", items: ["Xcode Agentic AI", "Claude Code", "Claude Agent Skills", "Claude Cowork", "MCP", "Codex", "GitHub Copilot", "RAG Systems", "OpenAI API", "Firebase", "AWS", "Docker", "MongoDB", "React"] },
   ], []);
 
   // ——— EDUCATION & CERTIFICATIONS DATA ———
@@ -206,7 +207,7 @@ const certifications = useMemo(() => [
 ], []);
 
   return (
-    <div className="relative isolate min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(20,184,166,0.16),transparent_34%),linear-gradient(135deg,#f8fafc_0%,#eef2ff_46%,#f8fafc_100%)] text-neutral-950 dark:bg-[radial-gradient(circle_at_top_left,rgba(45,212,191,0.12),transparent_30%),linear-gradient(135deg,#020617_0%,#111827_48%,#18181b_100%)] dark:text-neutral-100 antialiased selection:bg-teal-900 selection:text-white dark:selection:bg-teal-200 dark:selection:text-neutral-950">
+    <div className="relative isolate min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(20,184,166,0.16),transparent_34%),linear-gradient(135deg,#f8fafc_0%,#eef2ff_46%,#f8fafc_100%)] pt-16 text-neutral-950 dark:bg-[radial-gradient(circle_at_top_left,rgba(45,212,191,0.12),transparent_30%),linear-gradient(135deg,#020617_0%,#111827_48%,#18181b_100%)] dark:text-neutral-100 antialiased selection:bg-teal-900 selection:text-white dark:selection:bg-teal-200 dark:selection:text-neutral-950">
       <div className="ambient-field" aria-hidden="true">
         <span className="ambient-shape ambient-shape-a" />
         <span className="ambient-shape ambient-shape-b" />
@@ -214,7 +215,7 @@ const certifications = useMemo(() => [
       </div>
 
       {/* NAV */}
-      <header className="sticky top-0 z-50 border-b border-black/5 bg-white/70 backdrop-blur-xl supports-[backdrop-filter]:bg-white/70 dark:border-white/10 dark:bg-neutral-950/60 dark:supports-[backdrop-filter]:bg-neutral-950/60">
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-black/5 bg-white/75 backdrop-blur-xl supports-[backdrop-filter]:bg-white/75 dark:border-white/10 dark:bg-neutral-950/70 dark:supports-[backdrop-filter]:bg-neutral-950/70">
         <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img src="/images/rahul-profile.jpg" alt="Rahul Pawar" className="h-7 w-7 rounded-full object-cover border border-black/10 dark:border-white/10" onError={(e) => { e.currentTarget.style.display = 'none' }} />
