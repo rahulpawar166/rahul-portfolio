@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import emailjs from '@emailjs/browser';
+import { liquidGlass } from "./liquidGlass";
 
 // Fallback SVG for experience cover images (neutral gradient)
 const FALLBACK_COVER = `data:image/svg+xml;utf8,\
@@ -207,21 +208,26 @@ const certifications = useMemo(() => [
 ], []);
 
   return (
-    <div className="relative isolate min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(20,184,166,0.16),transparent_34%),linear-gradient(135deg,#f8fafc_0%,#eef2ff_46%,#f8fafc_100%)] pt-16 text-neutral-950 dark:bg-[radial-gradient(circle_at_top_left,rgba(45,212,191,0.12),transparent_30%),linear-gradient(135deg,#020617_0%,#111827_48%,#18181b_100%)] dark:text-neutral-100 antialiased selection:bg-teal-900 selection:text-white dark:selection:bg-teal-200 dark:selection:text-neutral-950">
+    <div className="relative isolate min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(20,184,166,0.16),transparent_34%),linear-gradient(135deg,#f8fafc_0%,#eef2ff_46%,#f8fafc_100%)] pt-28 text-neutral-950 dark:bg-[radial-gradient(circle_at_top_left,rgba(45,212,191,0.12),transparent_30%),linear-gradient(135deg,#020617_0%,#111827_48%,#18181b_100%)] dark:text-neutral-100 antialiased selection:bg-teal-900 selection:text-white dark:selection:bg-teal-200 dark:selection:text-neutral-950 sm:pt-16">
       <div className="ambient-field" aria-hidden="true">
+        <span className="abstract-grid" />
+        <span className="abstract-ribbon abstract-ribbon-a" />
+        <span className="abstract-ribbon abstract-ribbon-b" />
+        <span className="abstract-ribbon abstract-ribbon-c" />
+        <span className="abstract-noise" />
         <span className="ambient-shape ambient-shape-a" />
         <span className="ambient-shape ambient-shape-b" />
         <span className="ambient-shape ambient-shape-c" />
       </div>
 
       {/* NAV */}
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-black/5 bg-white/75 backdrop-blur-xl supports-[backdrop-filter]:bg-white/75 dark:border-white/10 dark:bg-neutral-950/70 dark:supports-[backdrop-filter]:bg-neutral-950/70">
-        <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+      <GlassSurface as="header" glass={{ scale: -62, chroma: 3, border: 0.12, mapBlur: 18, blur: 8, fallbackBlur: 20 }} className="fixed left-1/2 top-3 z-50 w-[calc(100%-1.5rem)] max-w-6xl -translate-x-1/2 rounded-[1.65rem] border border-white/70 bg-white/75 shadow-2xl shadow-slate-900/10 backdrop-blur-xl supports-[backdrop-filter]:bg-white/75 dark:border-white/10 dark:bg-neutral-950/70 dark:shadow-black/35 dark:supports-[backdrop-filter]:bg-neutral-950/70">
+        <div className="mx-auto flex flex-wrap items-center justify-between gap-x-4 gap-y-3 px-4 py-3 sm:px-5">
           <div className="flex items-center gap-3">
             <img src="/images/rahul-profile.jpg" alt="Rahul Pawar" className="h-7 w-7 rounded-full object-cover border border-black/10 dark:border-white/10" onError={(e) => { e.currentTarget.style.display = 'none' }} />
             <span className="font-semibold tracking-tight">Rahul Pawar</span>
           </div>
-          <nav className="hidden sm:flex items-center gap-6 text-sm opacity-80">
+          <nav className="order-3 flex w-full items-center gap-4 overflow-x-auto whitespace-nowrap pb-1 text-xs opacity-80 sm:order-none sm:w-auto sm:gap-6 sm:overflow-visible sm:pb-0 sm:text-sm">
             <a href="#resume" className="hover:opacity-100">Resume</a>
             <a href="#writing" className="hover:opacity-100">Writing</a>
             <a href="#experience" className="hover:opacity-100">Experience</a>
@@ -235,7 +241,7 @@ const certifications = useMemo(() => [
             {isDark ? "Light" : "Dark"}
           </button>
         </div>
-      </header>
+      </GlassSurface>
 
       {/* HERO */}
       <section id="cover" className="relative">
@@ -252,7 +258,7 @@ const certifications = useMemo(() => [
 
         {/* Profile overlay */}
         <div className="relative z-10 mx-auto max-w-6xl px-4">
-          <div className="-mt-12 flex flex-col gap-5 rounded-[2rem] border border-white/80 bg-white/75 p-5 shadow-xl shadow-slate-300/40 backdrop-blur-xl dark:border-white/10 dark:bg-neutral-950/70 dark:shadow-black/30 sm:flex-row sm:items-end sm:p-6">
+          <GlassSurface className="-mt-12 flex flex-col gap-5 rounded-[2rem] border border-white/80 bg-white/75 p-5 shadow-xl shadow-slate-300/40 backdrop-blur-xl dark:border-white/10 dark:bg-neutral-950/70 dark:shadow-black/30 sm:flex-row sm:items-end sm:p-6">
             <img
               src="/images/rahul-profile.jpg"
               alt="Rahul Pawar"
@@ -271,27 +277,27 @@ const certifications = useMemo(() => [
                 <a href="mailto:rahulpawar166@gmail.com" className="rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm transition hover:-translate-y-0.5 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15">Email</a>
               </div>
             </div>
-          </div>
+          </GlassSurface>
         </div>
       </section>
 
       {/* RESUME */}
       <section id="resume" className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
         <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
-          <div className="rounded-[2rem] border border-white/80 bg-white/75 p-6 shadow-xl shadow-slate-300/30 backdrop-blur-xl dark:border-white/10 dark:bg-white/10 dark:shadow-black/20 sm:p-8">
+          <GlassSurface className="rounded-[2rem] border border-white/80 bg-white/75 p-6 shadow-xl shadow-slate-300/30 backdrop-blur-xl dark:border-white/10 dark:bg-white/10 dark:shadow-black/20 sm:p-8">
             <SectionHeader title="Resume" subtitle="Updated from the latest PDF" />
             <p className="text-sm leading-7 text-neutral-700 dark:text-neutral-300">Focused on senior iOS work, SwiftUI migration, AI-assisted engineering workflows, release ownership, cross-platform delivery, and production-quality mobile architecture.</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a href={RESUME_URL} target="_blank" rel="noreferrer" className="rounded-full bg-teal-700 px-4 py-2 text-sm font-medium text-white shadow-lg shadow-teal-700/20 transition hover:-translate-y-0.5 dark:bg-teal-300 dark:text-neutral-950">Open resume</a>
               <a href={RESUME_URL} download className="rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15">Download</a>
             </div>
-          </div>
+          </GlassSurface>
           <div className="grid gap-4 sm:grid-cols-2">
             {resumeHighlights.map((item, i) => (
-              <div key={item} className="rounded-3xl border border-white/80 bg-white/70 p-5 shadow-lg shadow-slate-300/20 backdrop-blur-xl dark:border-white/10 dark:bg-white/10 dark:shadow-black/20">
+              <GlassSurface key={item} className="rounded-3xl border border-white/80 bg-white/70 p-5 shadow-lg shadow-slate-300/20 backdrop-blur-xl dark:border-white/10 dark:bg-white/10 dark:shadow-black/20">
                 <p className="text-xs font-semibold text-teal-700 dark:text-teal-300">0{i + 1}</p>
                 <p className="mt-3 text-sm leading-6 text-neutral-800 dark:text-neutral-200">{item}</p>
-              </div>
+              </GlassSurface>
             ))}
           </div>
         </div>
@@ -319,7 +325,7 @@ const certifications = useMemo(() => [
               (exp.cover || '').endsWith('.jpg') ? exp.cover.replace('.jpg', '.jpeg') : undefined,
             ].filter(Boolean);
             return (
-              <article key={idx} className="overflow-hidden rounded-[1.75rem] border border-white/80 bg-white/70 shadow-lg shadow-slate-300/25 backdrop-blur-xl transition hover:-translate-y-1 dark:border-white/10 dark:bg-white/10 dark:shadow-black/20">
+              <GlassSurface as="article" key={idx} className="overflow-hidden rounded-[1.75rem] border border-white/80 bg-white/70 shadow-lg shadow-slate-300/25 backdrop-blur-xl transition hover:-translate-y-1 dark:border-white/10 dark:bg-white/10 dark:shadow-black/20">
                 <div className="aspect-[16/7] w-full bg-neutral-100 dark:bg-neutral-900">
                   <img
                     src={candidates[0] || FALLBACK_COVER}
@@ -348,7 +354,7 @@ const certifications = useMemo(() => [
                     ))}
                   </div>
                 </div>
-              </article>
+              </GlassSurface>
             );
           })}
         </div>
@@ -359,7 +365,8 @@ const certifications = useMemo(() => [
         <SectionHeader title="Projects" subtitle="Native apps, developer tools, and experiments worth a peek" />
         <div className="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
           {featuredProjects.map((project) => (
-            <a
+            <GlassSurface
+              as="a"
               key={project.name}
               href={project.link}
               target="_blank"
@@ -374,7 +381,7 @@ const certifications = useMemo(() => [
                   <span key={tag} className="rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs text-neutral-700 dark:border-white/10 dark:bg-white/10 dark:text-neutral-200">{tag}</span>
                 ))}
               </div>
-            </a>
+            </GlassSurface>
           ))}
         </div>
         {repoError && <InlineNote text={`GitHub fetch issue: ${repoError}. Showing a subset if available.`} />}
@@ -404,7 +411,7 @@ const certifications = useMemo(() => [
   <SectionHeader title="Education" subtitle="Degrees, highlights, and coursework" />
   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
     {education.map((ed, i) => (
-      <article key={i} className="flex gap-4 rounded-[1.5rem] border border-white/80 bg-white/70 p-5 shadow-lg shadow-slate-300/20 backdrop-blur-xl dark:border-white/10 dark:bg-white/10 dark:shadow-black/20">
+      <GlassSurface as="article" key={i} className="flex gap-4 rounded-[1.5rem] border border-white/80 bg-white/70 p-5 shadow-lg shadow-slate-300/20 backdrop-blur-xl dark:border-white/10 dark:bg-white/10 dark:shadow-black/20">
         <div className="shrink-0 h-14 w-14 rounded-xl overflow-hidden bg-neutral-100 dark:bg-neutral-900 border border-black/10 dark:border-white/10">
           {ed.logo ? (
             <img
@@ -427,7 +434,7 @@ const certifications = useMemo(() => [
             </ul>
           )}
         </div>
-      </article>
+      </GlassSurface>
     ))}
   </div>
 </section>
@@ -447,26 +454,26 @@ const certifications = useMemo(() => [
         <SectionHeader title="Skills" subtitle="A toolbox tuned for Apple platforms" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {skills.map((s, i) => (
-            <div key={i} className="rounded-[1.5rem] border border-white/80 bg-white/70 p-5 shadow-lg shadow-slate-300/20 backdrop-blur-xl dark:border-white/10 dark:bg-white/10 dark:shadow-black/20">
+            <GlassSurface key={i} className="rounded-[1.5rem] border border-white/80 bg-white/70 p-5 shadow-lg shadow-slate-300/20 backdrop-blur-xl dark:border-white/10 dark:bg-white/10 dark:shadow-black/20">
               <h4 className="font-medium mb-3">{s.group}</h4>
               <div className="flex flex-wrap gap-2">
                 {s.items.map((it) => (
                   <span key={it} className="text-xs px-2 py-1 rounded-full border border-black/10 dark:border-white/10 opacity-90">{it}</span>
                 ))}
               </div>
-            </div>
+            </GlassSurface>
           ))}
         </div>
       </section>
 
       {/* CONTACT */}
       <section id="contact" className="mx-auto max-w-6xl px-4 py-16 sm:py-20">
-        <div className="rounded-[2rem] border border-white/80 bg-white/75 p-8 shadow-xl shadow-slate-300/30 backdrop-blur-xl dark:border-white/10 dark:bg-white/10 dark:shadow-black/20 sm:p-12">
+        <GlassSurface className="rounded-[2rem] border border-white/80 bg-white/75 p-8 shadow-xl shadow-slate-300/30 backdrop-blur-xl dark:border-white/10 dark:bg-white/10 dark:shadow-black/20 sm:p-12">
           <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-center">Send me an Email</h3>
           <p className="mt-3 opacity-80 text-center">Or call/text: <a href="tel:+15516897590" className="underline text-base sm:text-lg font-medium"><span role="img" aria-label="USA flag" className="mr-1 text-lg sm:text-xl align-[-2px]">🇺🇸</span>+1 (551) 689‑7590</a></p>
 
           <ContactForm />
-        </div>
+        </GlassSurface>
       </section>
 
       <footer className="mx-auto max-w-6xl px-4 pb-10 pt-6 text-xs opacity-60">© {new Date().getFullYear()} Rahul Pawar. Crafted with Swift‑like precision.</footer>
@@ -606,8 +613,8 @@ const certifications = useMemo(() => [
         <div className="flex items-center justify-between mb-3">
           <div className="opacity-0">.</div>
           <div className="flex gap-2">
-            <button aria-label="Prev" onClick={() => scrollBy(-1)} className="rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs shadow-sm transition hover:bg-white dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15">◀</button>
-            <button aria-label="Next" onClick={() => scrollBy(1)} className="rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs shadow-sm transition hover:bg-white dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15">▶</button>
+            <GlassSurface as="button" glass={{ scale: -42, chroma: 2, border: 0.18, mapBlur: 12, blur: 6 }} aria-label="Prev" onClick={() => scrollBy(-1)} className="rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs shadow-sm transition hover:bg-white dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15">◀</GlassSurface>
+            <GlassSurface as="button" glass={{ scale: -42, chroma: 2, border: 0.18, mapBlur: 12, blur: 6 }} aria-label="Next" onClick={() => scrollBy(1)} className="rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs shadow-sm transition hover:bg-white dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15">▶</GlassSurface>
           </div>
         </div>
         <div ref={scrollerRef} className="overflow-x-auto snap-x snap-mandatory no-scrollbar">
@@ -668,7 +675,8 @@ const certifications = useMemo(() => [
     })();
 
     return (
-      <a
+      <GlassSurface
+        as="a"
         href={repo.html_url || repo.link}
         target="_blank"
         rel="noreferrer"
@@ -703,7 +711,7 @@ const certifications = useMemo(() => [
         {updated && (
           <p className="text-[11px] opacity-60 mt-4">Updated {updatedFmt}</p>
         )}
-      </a>
+      </GlassSurface>
     );
   }
 
@@ -733,7 +741,8 @@ const certifications = useMemo(() => [
     const excerpt = truncateWords(plain, 42);
 
     return (
-      <a
+      <GlassSurface
+        as="a"
         href={article.link}
         target="_blank"
         rel="noreferrer"
@@ -771,7 +780,7 @@ const certifications = useMemo(() => [
             Show more →
           </span>
         </div>
-      </a>
+      </GlassSurface>
     );
   }
 
@@ -785,7 +794,8 @@ function CertificateCard({ cert }) {
   const label = isPDF ? 'PDF · Click to view' : 'Image · Click to view';
 
   return (
-    <a
+    <GlassSurface
+      as="a"
       href={file}
       target="_blank"
       rel="noreferrer"
@@ -812,9 +822,31 @@ function CertificateCard({ cert }) {
         </h4>
         <p className="text-[11px] opacity-70 mt-1">{label}</p>
       </div>
-    </a>
+    </GlassSurface>
   );
 }
+}
+
+function useLiquidGlass(ref, options) {
+  const optionsKey = JSON.stringify(options || {});
+
+  useEffect(() => {
+    if (!ref.current) return undefined;
+
+    const glass = liquidGlass(ref.current, JSON.parse(optionsKey));
+    return () => glass.destroy();
+  }, [ref, optionsKey]);
+}
+
+function GlassSurface({ as = "div", className = "", glass, children, ...props }) {
+  const ref = useRef(null);
+  useLiquidGlass(ref, glass);
+
+  return React.createElement(
+    as,
+    { ...props, ref, className: `liquid-glass ${className}` },
+    children,
+  );
 }
 
 /* ——— FALLBACKS ——— */
