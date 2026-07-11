@@ -208,7 +208,7 @@ const certifications = useMemo(() => [
 ], []);
 
   return (
-    <div className="relative isolate min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(20,184,166,0.16),transparent_34%),linear-gradient(135deg,#f8fafc_0%,#eef2ff_46%,#f8fafc_100%)] pt-28 text-neutral-950 dark:bg-[radial-gradient(circle_at_top_left,rgba(45,212,191,0.12),transparent_30%),linear-gradient(135deg,#020617_0%,#111827_48%,#18181b_100%)] dark:text-neutral-100 antialiased selection:bg-teal-900 selection:text-white dark:selection:bg-teal-200 dark:selection:text-neutral-950 sm:pt-16">
+    <div className="relative isolate min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(20,184,166,0.16),transparent_34%),linear-gradient(135deg,#f8fafc_0%,#eef2ff_46%,#f8fafc_100%)] pt-28 text-neutral-950 dark:bg-[radial-gradient(circle_at_top_left,rgba(45,212,191,0.12),transparent_30%),linear-gradient(135deg,#020617_0%,#111827_48%,#18181b_100%)] dark:text-neutral-100 antialiased selection:bg-teal-900 selection:text-white dark:selection:bg-teal-200 dark:selection:text-neutral-950 sm:pt-24">
       <div className="ambient-field" aria-hidden="true">
         <span className="abstract-grid" />
         <span className="abstract-ribbon abstract-ribbon-a" />
@@ -221,7 +221,7 @@ const certifications = useMemo(() => [
       </div>
 
       {/* NAV */}
-      <GlassSurface as="header" glass={{ scale: -62, chroma: 3, border: 0.12, mapBlur: 18, blur: 8, fallbackBlur: 20 }} className="fixed left-1/2 top-3 z-50 w-[calc(100%-1.5rem)] max-w-6xl -translate-x-1/2 rounded-[1.65rem] border border-white/70 bg-white/75 shadow-2xl shadow-slate-900/10 backdrop-blur-xl supports-[backdrop-filter]:bg-white/75 dark:border-white/10 dark:bg-neutral-950/70 dark:shadow-black/35 dark:supports-[backdrop-filter]:bg-neutral-950/70">
+      <GlassSurface as="header" glass={{ scale: -92, chroma: 5, border: 0.075, mapBlur: 12, blur: 2, fallbackBlur: 22 }} className="nav-glass-shell fixed left-1/2 top-3 z-50 w-[calc(100%-1.5rem)] max-w-6xl -translate-x-1/2 rounded-[1.65rem] border border-white/70 bg-white/75 shadow-2xl shadow-slate-900/10 backdrop-blur-xl supports-[backdrop-filter]:bg-white/75 dark:border-white/10 dark:bg-neutral-950/70 dark:shadow-black/35 dark:supports-[backdrop-filter]:bg-neutral-950/70">
         <div className="mx-auto flex flex-wrap items-center justify-between gap-x-4 gap-y-3 px-4 py-3 sm:px-5">
           <div className="flex items-center gap-3">
             <img src="/images/rahul-profile.jpg" alt="Rahul Pawar" className="h-7 w-7 rounded-full object-cover border border-black/10 dark:border-white/10" onError={(e) => { e.currentTarget.style.display = 'none' }} />
@@ -237,8 +237,20 @@ const certifications = useMemo(() => [
             <a href="#skills" className="hover:opacity-100">Skills</a>
             <a href="#contact" className="hover:opacity-100">Contact</a>
           </nav>
-          <button aria-label="Toggle dark mode" className="rounded-full border border-black/10 bg-white/60 px-3 py-1 text-xs shadow-sm transition hover:scale-[1.02] active:scale-[0.98] dark:border-white/10 dark:bg-white/10" onClick={() => setIsDark((v) => !v)}>
-            {isDark ? "Light" : "Dark"}
+          <button
+            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            aria-pressed={isDark}
+            className="theme-toggle"
+            onClick={() => setIsDark((v) => !v)}
+            type="button"
+          >
+            <span className="theme-toggle-track" aria-hidden="true">
+              <span className="theme-toggle-thumb">
+                {isDark ? <MaterialMoonIcon /> : <MaterialSunIcon />}
+              </span>
+              <span className="theme-toggle-icon theme-toggle-icon-light"><MaterialSunIcon /></span>
+              <span className="theme-toggle-icon theme-toggle-icon-dark"><MaterialMoonIcon /></span>
+            </span>
           </button>
         </div>
       </GlassSurface>
@@ -258,7 +270,7 @@ const certifications = useMemo(() => [
 
         {/* Profile overlay */}
         <div className="relative z-10 mx-auto max-w-6xl px-4">
-          <GlassSurface className="-mt-12 flex flex-col gap-5 rounded-[2rem] border border-white/80 bg-white/75 p-5 shadow-xl shadow-slate-300/40 backdrop-blur-xl dark:border-white/10 dark:bg-neutral-950/70 dark:shadow-black/30 sm:flex-row sm:items-end sm:p-6">
+          <GlassSurface glass={{ scale: -84, chroma: 4, border: 0.08, mapBlur: 14, blur: 5, fallbackBlur: 24 }} className="-mt-12 flex flex-col gap-5 rounded-[2rem] border border-white/80 bg-white/75 p-5 shadow-xl shadow-slate-300/40 backdrop-blur-xl dark:border-white/10 dark:bg-neutral-950/70 dark:shadow-black/30 sm:flex-row sm:items-end sm:p-6">
             <img
               src="/images/rahul-profile.jpg"
               alt="Rahul Pawar"
@@ -828,14 +840,16 @@ function CertificateCard({ cert }) {
 }
 
 function useLiquidGlass(ref, options) {
+  const enabled = options !== undefined && options !== false;
   const optionsKey = JSON.stringify(options || {});
 
   useEffect(() => {
+    if (!enabled) return undefined;
     if (!ref.current) return undefined;
 
     const glass = liquidGlass(ref.current, JSON.parse(optionsKey));
     return () => glass.destroy();
-  }, [ref, optionsKey]);
+  }, [enabled, ref, optionsKey]);
 }
 
 function GlassSurface({ as = "div", className = "", glass, children, ...props }) {
@@ -846,6 +860,22 @@ function GlassSurface({ as = "div", className = "", glass, children, ...props })
     as,
     { ...props, ref, className: `liquid-glass ${className}` },
     children,
+  );
+}
+
+function MaterialSunIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4" fill="currentColor">
+      <path d="M6.76 4.84 4.96 3.05 3.55 4.46l1.79 1.8 1.42-1.42ZM1 13h3v-2H1v2Zm10-12v3h2V1h-2Zm9.04 2.46-1.41-1.41-1.79 1.79 1.41 1.42 1.79-1.8ZM17.24 19.16l1.79 1.8 1.41-1.42-1.79-1.79-1.41 1.41ZM20 11v2h3v-2h-3Zm-8 7a6 6 0 1 1 0-12 6 6 0 0 1 0 12Zm-1 5h2v-3h-2v3Zm-7.45-3.46 1.41 1.42 1.8-1.8-1.42-1.41-1.79 1.79Z" />
+    </svg>
+  );
+}
+
+function MaterialMoonIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4" fill="currentColor">
+      <path d="M12.1 22c-1.39 0-2.7-.26-3.92-.79a10.18 10.18 0 0 1-3.21-2.16 10.17 10.17 0 0 1-2.16-3.21A9.77 9.77 0 0 1 2 11.92c0-2.13.6-4.05 1.8-5.75A9.85 9.85 0 0 1 8.55 2.5c.38-.15.72-.11 1.02.11.3.23.42.54.36.94a9.36 9.36 0 0 0 .81 5.32 9.5 9.5 0 0 0 4.39 4.39 9.39 9.39 0 0 0 5.32.81c.4-.06.71.06.94.36.22.3.26.64.11 1.02a9.85 9.85 0 0 1-3.67 4.75A9.87 9.87 0 0 1 12.1 22Z" />
+    </svg>
   );
 }
 

@@ -158,7 +158,7 @@ export function liquidGlass(element, options = {}) {
     blur: 3,
     saturate: 1.5,
     radius: null,
-    fallbackBlur: 18,
+    fallbackBlur: 26,
     ...options,
   };
 
