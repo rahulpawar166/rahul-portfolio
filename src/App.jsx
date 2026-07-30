@@ -89,24 +89,24 @@ export default function PortfolioAppleStyle() {
 
   /* ——— RESUME‑DRIVEN DATA ——— */
   const resumeHighlights = useMemo(() => [
-    "Senior iOS Developer leading SwiftUI, platform architecture, releases, and mobile AI tooling.",
-    "Built real-time sync with Swift Concurrency and Combine, improving responsiveness by 30%.",
-    "Created Claude Code agent skills, PR review automation, and Jenkins-backed XCTest workflows.",
-    "Ships across iOS, macOS, Android, backend, and AI-assisted developer workflows.",
+    "Senior iOS Developer leading a 5-6 person iOS team across delivery, architecture, code quality, and releases.",
+    "Spearheaded the SwiftUI migration from the ground up, bringing the codebase to roughly 70% SwiftUI adoption.",
+    "Engineered Jira and Figma MCP-backed AI PR review automation, reducing review cycles from about a week to under a day.",
+    "Built Claude Code and Claude Cowork workflows for mobile engineering, PR drafting, onboarding, and hackathon evaluation at scale.",
   ], []);
 
   const featuredProjects = useMemo(() => [
     {
       name: "RestSync",
       type: "macOS menubar app",
-      description: "A SwiftUI break reminder inspired by the 20-20-20 rule, designed around macOS HIG, accessibility, and a minimal daily-use footprint.",
-      tags: ["SwiftUI", "macOS", "Accessibility"],
+      description: "A native macOS menu-bar app inspired by the 20-20-20 rule, prompting regular screen breaks with an unobtrusive SwiftUI experience built for daily personal use.",
+      tags: ["SwiftUI", "macOS", "HIG", "Accessibility"],
       link: "https://github.com/rahulpawar166",
     },
     {
       name: "CompanionKit",
       type: "Xcode Source Editor Extension",
-      description: "An OpenAI-powered Xcode extension for refactoring code, finding bugs, and explaining selected code without leaving the IDE.",
+      description: "An OpenAI-powered Xcode Source Editor Extension that refactors selected code, surfaces bugs, and explains implementation details without leaving Xcode.",
       tags: ["Swift", "XcodeKit", "OpenAI API"],
       link: "https://github.com/rahulpawar166",
     },
@@ -119,12 +119,14 @@ export default function PortfolioAppleStyle() {
       period: "Feb 2023 – Present",
       cover: "/images/eulerity.png",
       sentences: [
-        "Lead iOS development across feature implementation, architecture, code quality, and App Store releases for a production mobile platform.",
-        "Led a multi-phase app transformation across iOS, Android, and backend, shipping delta banners, pulse indicators, guided tours, pull-to-refresh freshness timestamps, and feature-flagged platform parity.",
-        "Led the full transition to SwiftUI and established it as the team standard, making subsequent product work faster and more consistent.",
-        "Built Claude Code agent skills, phase-aware PR review automation with Jira and Figma MCP integration, and Xcode agentic AI configuration for the mobile team.",
+        "Lead a 5-6 person iOS engineering team across feature delivery, code quality, architecture, and App Store release ownership.",
+        "Directed a multi-phase app transformation across iOS, Android, and backend, designing APIs behind activity delta banners, live pulse indicators, guided tours, and pull-to-refresh freshness timestamps behind feature flags with platform parity.",
+        "Spearheaded the SwiftUI migration from the ground up, bringing the codebase to roughly 70% SwiftUI adoption and lowering the barrier for Android engineers to contribute directly to iOS features.",
+        "Built and maintain Claude Code agent skills for experiment removal with build verification, independent code review, PR drafting, and iOS onboarding, with mobile-wide adoption and select company-wide rollout.",
+        "Engineered an AI-assisted PR review pipeline integrating Jira and Figma through MCP servers, cutting average review cycle time from roughly a week to under a day.",
+        "Designed and built a Claude Cowork hackathon evaluation pipeline that ingests Gmail submissions, scores and stores entries, and generates consolidated results so hundreds of submissions can be reviewed in a single day.",
         "Implemented a real-time data sync system with Swift Concurrency and Combine, improving responsiveness by 30% and reducing data-related issues by 20%.",
-        "Improved team productivity by 20% through MVVM conventions, replaced CocoaPods with Swift Package Manager for 25% faster builds, and authored the iOS code review standard.",
+        "Raised team productivity by 20% through MVVM adoption, migrated CocoaPods to Swift Package Manager for 25% faster builds, and authored a severity-tiered iOS code review standard.",
         "Leveraged Jenkins to automate XCTest unit test execution, improving code quality and reducing manual testing effort.",
         "Contribute across platforms by delivering Android features with Kotlin, XML, and Jetpack Compose while partnering with recruiting on mobile engineering candidates."
       ],
@@ -135,10 +137,10 @@ export default function PortfolioAppleStyle() {
       period: "May 2022 – Dec 2022",
       cover: "/images/eulerity.png",
       sentences: [
-        "Integrated KIF UI testing across critical user journeys (login, onboarding, publishing flows) and wired it into CI; we standardized accessibility identifiers, built deterministic fixtures, and added screenshot diffs. This cut flaky regressions and reduced manual QA time by ~50%.",
-        "Introduced a lightweight testing pyramid around KIF (unit → view‑model → UI) with clear data builders and network stubs so features shipped with predictable coverage and fast feedback.",
-        "Tracked and fixed memory issues on older devices using Instruments (Leaks/Allocations/Time Profiler); eliminated retain cycles in delegate/closure code, audited singletons, and optimized image caching. Result: fewer background terminations and smoother scrolling.",
-        "Authored concise developer docs for complex flows (sequence diagrams, error/fallback states, performance budgets) so onboarding engineers could make changes confidently."
+        "Researched and integrated KIF UI and unit testing, improving testing efficiency by 50% across critical app flows.",
+        "Identified and resolved a critical memory leak, eliminating crashes on older devices and improving performance by 15%.",
+        "Optimized app performance, improved stability and scalability, and triaged bugs to maintain a smooth user experience.",
+        "Authored internal documentation for newly implemented features so the team could understand and maintain complex flows confidently."
       ],
     },
     {
@@ -147,9 +149,8 @@ export default function PortfolioAppleStyle() {
       period: "Dec 2019 – Aug 2021",
       cover: "/images/schnell.jpg",
       sentences: [
-        "Delivered multiple web and mobile apps end‑to‑end (React/Swift + Node/Firebase), from scoping and API contracts to releases; partnered with design/PM and demoed to clients, turning feedback into weekly increments.",
-        "Set up CI/CD and a reusable module template, cutting project bootstrap time by ~30% and keeping repos consistent across teams.",
-        "Introduced a cloud‑first data workflow: seed scripts, staging environments, and anonymized fixtures with a lightweight verification harness. This removed brittle CSV hand‑offs and cut data‑testing time by ~60%."
+        "Built websites, web apps, and mobile applications as part of a cross-functional engineering team.",
+        "Introduced a new cloud database system that cut data-analysis testing time by 60% and strengthened data security."
       ],
     },
     {
@@ -158,8 +159,8 @@ export default function PortfolioAppleStyle() {
       period: "May 2019 – Jul 2019",
       cover: "/images/seva.jpg",
       sentences: [
-        "Led a 6‑person team to deliver the Rojgaar iOS app in ~8 weeks using Firebase (Auth, Firestore, Storage). I built job search, profile, and messaging with offline‑friendly queries and safe writes.",
-        "Implemented push notifications and crash/analytics dashboards, wrote a simple release checklist, and handed off clear docs so the client could operate the app after delivery."
+        "Led a 6-person team to design and build the Rojgaar iOS application.",
+        "Developed Rojgaar in Swift with Firebase integration for real-time cloud connectivity."
       ],
     },
   ], []);
@@ -168,8 +169,9 @@ export default function PortfolioAppleStyle() {
     { group: "Languages", items: ["Swift", "Objective-C", "Kotlin", "Python", "Java", "C", "C++", "JavaScript", "SQL"] },
     { group: "Apple Platforms", items: ["iOS", "iPadOS", "macOS", "watchOS", "SwiftUI", "UIKit", "XcodeKit", "HealthKit"] },
     { group: "Frameworks", items: ["Swift Concurrency", "Combine", "Core Data", "XCTest", "Swift Testing", "KIF", "EarlGrey", "Swinject"] },
-    { group: "Tools", items: ["Xcode", "App Store Connect", "TestFlight", "SPM", "CocoaPods", "Android Studio", "Figma", "Jenkins", "CI/CD"] },
-    { group: "AI & Backend", items: ["Xcode Agentic AI", "Claude Code", "Claude Agent Skills", "Claude Cowork", "MCP", "Codex", "GitHub Copilot", "RAG Systems", "OpenAI API", "Firebase", "AWS", "Docker", "MongoDB", "React"] },
+    { group: "Tools", items: ["Xcode", "App Store Connect", "TestFlight", "Swift Package Manager", "CocoaPods", "Android Studio", "Figma", "GitHub", "Jenkins"] },
+    { group: "AI Tools", items: ["Xcode Agentic AI", "Claude Code", "Claude Agent Skills", "Claude Cowork", "MCP", "ChatGPT Codex", "GitHub Copilot", "RAG Systems"] },
+    { group: "Other Technologies", items: ["Firebase", "Crashlytics", "OpenAI API", "Docker", "MongoDB", "React", "AWS"] },
   ], []);
 
   // ——— EDUCATION & CERTIFICATIONS DATA ———
@@ -280,7 +282,7 @@ const certifications = useMemo(() => [
             <div className="pb-1">
               <p className="text-xs font-medium uppercase tracking-[0.22em] text-teal-700 dark:text-teal-300">Senior iOS Developer</p>
               <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-5xl">Rahul Pawar</h1>
-              <p className="mt-3 max-w-3xl text-sm leading-6 text-neutral-700 dark:text-neutral-300 sm:text-base">SwiftUI-focused mobile engineer building production Apple platform experiences, AI-assisted developer tooling, and reliable release systems across iOS, macOS, and Android.</p>
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-neutral-700 dark:text-neutral-300 sm:text-base">Senior iOS engineer leading mobile platform delivery, SwiftUI architecture, App Store releases, and AI-assisted developer workflows across iOS, macOS, Android, and backend teams.</p>
               <div className="mt-3 flex flex-wrap gap-3">
                 <a href={RESUME_URL} target="_blank" rel="noreferrer" className="rounded-full bg-neutral-950 px-4 py-2 text-sm font-medium text-white shadow-lg shadow-neutral-950/20 transition hover:-translate-y-0.5 dark:bg-white dark:text-neutral-950">View Resume</a>
                 <a href={RESUME_URL} download className="rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15">Download PDF</a>
@@ -298,7 +300,7 @@ const certifications = useMemo(() => [
         <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
           <GlassSurface className="rounded-[2rem] border border-white/80 bg-white/75 p-6 shadow-xl shadow-slate-300/30 backdrop-blur-xl dark:border-white/10 dark:bg-white/10 dark:shadow-black/20 sm:p-8">
             <SectionHeader title="Resume" subtitle="Updated from the latest PDF" />
-            <p className="text-sm leading-7 text-neutral-700 dark:text-neutral-300">Focused on senior iOS work, SwiftUI migration, AI-assisted engineering workflows, release ownership, cross-platform delivery, and production-quality mobile architecture.</p>
+            <p className="text-sm leading-7 text-neutral-700 dark:text-neutral-300">Focused on senior iOS leadership, SwiftUI migration, AI-assisted engineering workflows, release ownership, cross-platform delivery, and production-quality mobile architecture.</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a href={RESUME_URL} target="_blank" rel="noreferrer" className="rounded-full bg-teal-700 px-4 py-2 text-sm font-medium text-white shadow-lg shadow-teal-700/20 transition hover:-translate-y-0.5 dark:bg-teal-300 dark:text-neutral-950">Open resume</a>
               <a href={RESUME_URL} download className="rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15">Download</a>
