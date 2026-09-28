@@ -60,7 +60,7 @@ export default function PortfolioAppleStyle() {
   }, []);
 
   // Featured & Blocklisted repos per request
-  const FEATURED_REPOS = ["RestSync", "iSEN"];
+  const FEATURED_REPOS = ["ChoreQuest", "RestSync", "iSEN"];
   const BLOCKLIST_REPOS = new Set(["Eulerity", "Swift XCTest Demo Project", "Swift-XCTest-Demo-Project", "rahul-portfolio", "Rahul-Portfolio"]);
 
   /* ——— MEDIUM ——— */
@@ -89,17 +89,24 @@ export default function PortfolioAppleStyle() {
 
   /* ——— RESUME‑DRIVEN DATA ——— */
   const resumeHighlights = useMemo(() => [
-    "Senior iOS Developer leading a 5-6 person iOS team across delivery, architecture, code quality, and releases.",
-    "Spearheaded the SwiftUI migration from the ground up, bringing the codebase to roughly 70% SwiftUI adoption.",
-    "Engineered Jira and Figma MCP-backed AI PR review automation, reducing review cycles from about a week to under a day.",
-    "Built Claude Code and Claude Cowork workflows for mobile engineering, PR drafting, onboarding, and hackathon evaluation at scale.",
+    "Senior iOS Developer leading a 5-6 person team across technical direction, delivery ownership, code review, and App Store releases.",
+    "Work across iOS, Android, web, and backend services with Swift, Kotlin, Jetpack Compose, React, and Java.",
+    "Led the SwiftUI migration to about 70% of the codebase, making iOS contribution easier for Android engineers.",
+    "Built Claude Code, Jira, Figma, and Claude Cowork workflows that cut PR review time and accelerated hackathon evaluation at scale.",
   ], []);
 
   const featuredProjects = useMemo(() => [
     {
+      name: "ChoreQuest",
+      type: "iOS app",
+      description: "A SwiftUI app that gamifies family chores. Parents create quests and approve completed work, kids track rewards on their own dashboard, and family profiles are backed by Firebase.",
+      tags: ["SwiftUI", "iOS", "Firebase", "Family"],
+      link: "https://github.com/rahulpawar166",
+    },
+    {
       name: "RestSync",
       type: "macOS menubar app",
-      description: "A native macOS menu-bar app inspired by the 20-20-20 rule, prompting regular screen breaks with an unobtrusive SwiftUI experience built for daily personal use.",
+      description: "A SwiftUI menu-bar app built on the 20-20-20 rule to prompt regular screen breaks. It follows Apple's HIG, is in daily use, and has an App Store release planned.",
       tags: ["SwiftUI", "macOS", "HIG", "Accessibility"],
       link: "https://github.com/rahulpawar166",
     },
@@ -119,16 +126,18 @@ export default function PortfolioAppleStyle() {
       period: "Feb 2023 – Present",
       cover: "/images/eulerity.png",
       sentences: [
-        "Lead a 5-6 person iOS engineering team across feature delivery, code quality, architecture, and App Store release ownership.",
-        "Directed a multi-phase app transformation across iOS, Android, and backend, designing APIs behind activity delta banners, live pulse indicators, guided tours, and pull-to-refresh freshness timestamps behind feature flags with platform parity.",
-        "Spearheaded the SwiftUI migration from the ground up, bringing the codebase to roughly 70% SwiftUI adoption and lowering the barrier for Android engineers to contribute directly to iOS features.",
-        "Built and maintain Claude Code agent skills for experiment removal with build verification, independent code review, PR drafting, and iOS onboarding, with mobile-wide adoption and select company-wide rollout.",
-        "Engineered an AI-assisted PR review pipeline integrating Jira and Figma through MCP servers, cutting average review cycle time from roughly a week to under a day.",
-        "Designed and built a Claude Cowork hackathon evaluation pipeline that ingests Gmail submissions, scores and stores entries, and generates consolidated results so hundreds of submissions can be reviewed in a single day.",
+        "Lead a 5-6 person iOS engineering team, setting technical direction, reviewing code, and owning delivery for the app.",
+        "Work across the stack: iOS in Swift, Android in Kotlin and Jetpack Compose, web in React, and backend services in Java.",
+        "Partner with product and engineering leadership to scope features, assess technical feasibility, plan delivery, and help hire mobile engineers through sourcing and interviews.",
+        "Led the move to SwiftUI, which now covers about 70% of the codebase and made iOS approachable enough for Android engineers to ship iOS features.",
+        "Built four cross-platform features across iOS, Android, and backend APIs: an activity delta banner, live pulse indicators, a guided app tour, and pull-to-refresh freshness timestamps behind feature flags with platform parity.",
         "Implemented a real-time data sync system with Swift Concurrency and Combine, improving responsiveness by 30% and reducing data-related issues by 20%.",
-        "Raised team productivity by 20% through MVVM adoption, migrated CocoaPods to Swift Package Manager for 25% faster builds, and authored a severity-tiered iOS code review standard.",
-        "Leveraged Jenkins to automate XCTest unit test execution, improving code quality and reducing manual testing effort.",
-        "Contribute across platforms by delivering Android features with Kotlin, XML, and Jetpack Compose while partnering with recruiting on mobile engineering candidates."
+        "Introduced MVVM across the app, raising team productivity by about 20%, and moved dependencies from CocoaPods to Swift Package Manager to cut build times by 25%.",
+        "Own App Store releases end to end through App Store Connect and TestFlight, with XCTest automated in Jenkins as a release gate.",
+        "Wrote and enforce the team's code review standard across concurrency, SwiftUI state, memory, and testing.",
+        "Built Claude Code skills for experiment removal, code review, PR drafting, and onboarding, now used by the mobile team and parts of engineering.",
+        "Built an AI-assisted PR review flow tied into Jira and Figma that cut review time from about a week to under a day.",
+        "Built a hackathon evaluation pipeline that pulls Gmail submissions, scores entries, and produces a results report so hundreds of entries can be reviewed in a day instead of several weeks."
       ],
     },
     {
@@ -137,10 +146,9 @@ export default function PortfolioAppleStyle() {
       period: "May 2022 – Dec 2022",
       cover: "/images/eulerity.png",
       sentences: [
-        "Researched and integrated KIF UI and unit testing, improving testing efficiency by 50% across critical app flows.",
-        "Identified and resolved a critical memory leak, eliminating crashes on older devices and improving performance by 15%.",
-        "Optimized app performance, improved stability and scalability, and triaged bugs to maintain a smooth user experience.",
-        "Authored internal documentation for newly implemented features so the team could understand and maintain complex flows confidently."
+        "Brought in the KIF framework for combined UI and unit testing, improving testing efficiency by 50%.",
+        "Tracked down a critical memory leak that was crashing older devices, improving performance by 15%.",
+        "Fixed bugs across the app and wrote internal documentation for new features."
       ],
     },
     {
@@ -149,8 +157,8 @@ export default function PortfolioAppleStyle() {
       period: "Dec 2019 – Aug 2021",
       cover: "/images/schnell.jpg",
       sentences: [
-        "Built websites, web apps, and mobile applications as part of a cross-functional engineering team.",
-        "Introduced a new cloud database system that cut data-analysis testing time by 60% and strengthened data security."
+        "Built websites, web apps, and mobile apps on a cross-functional team.",
+        "Introduced a cloud database setup that cut data-analysis testing time by 60% and tightened data security."
       ],
     },
     {
@@ -159,19 +167,18 @@ export default function PortfolioAppleStyle() {
       period: "May 2019 – Jul 2019",
       cover: "/images/seva.jpg",
       sentences: [
-        "Led a 6-person team to design and build the Rojgaar iOS application.",
-        "Developed Rojgaar in Swift with Firebase integration for real-time cloud connectivity."
+        "Led a team of 6 building Rojgaar, an iOS app in Swift with Firebase for real-time connectivity."
       ],
     },
   ], []);
 
   const skills = useMemo(() => [
-    { group: "Languages", items: ["Swift", "Objective-C", "Kotlin", "Python", "Java", "C", "C++", "JavaScript", "SQL"] },
-    { group: "Apple Platforms", items: ["iOS", "iPadOS", "macOS", "watchOS", "SwiftUI", "UIKit", "XcodeKit", "HealthKit"] },
-    { group: "Frameworks", items: ["Swift Concurrency", "Combine", "Core Data", "XCTest", "Swift Testing", "KIF", "EarlGrey", "Swinject"] },
-    { group: "Tools", items: ["Xcode", "App Store Connect", "TestFlight", "Swift Package Manager", "CocoaPods", "Android Studio", "Figma", "GitHub", "Jenkins"] },
-    { group: "AI Tools", items: ["Xcode Agentic AI", "Claude Code", "Claude Agent Skills", "Claude Cowork", "MCP", "ChatGPT Codex", "GitHub Copilot", "RAG Systems"] },
-    { group: "Other Technologies", items: ["Firebase", "Crashlytics", "OpenAI API", "Docker", "MongoDB", "React", "AWS"] },
+    { group: "Languages", items: ["Swift", "Kotlin", "Java", "Objective-C", "Python", "C++", "JavaScript", "SQL"] },
+    { group: "Frameworks", items: ["SwiftUI", "UIKit", "Swift Concurrency", "Combine", "React", "Core Data", "HealthKit"] },
+    { group: "Testing and Delivery", items: ["XCTest", "Swift Testing", "KIF", "Jenkins", "App Store Connect", "TestFlight", "Swift Package Manager"] },
+    { group: "Cloud and Tools", items: ["Firebase", "AWS", "Docker", "Figma", "Android Studio", "GitHub", "Xcode"] },
+    { group: "Practices", items: ["Feature scoping", "Technical feasibility", "Cross-platform delivery", "Code review", "Mentoring"] },
+    { group: "AI Tooling", items: ["Claude Code", "Claude Cowork", "MCP", "GitHub Copilot", "ChatGPT Codex", "RAG"] },
   ], []);
 
   // ——— EDUCATION & CERTIFICATIONS DATA ———
@@ -282,7 +289,7 @@ const certifications = useMemo(() => [
             <div className="pb-1">
               <p className="text-xs font-medium uppercase tracking-[0.22em] text-teal-700 dark:text-teal-300">Senior iOS Developer</p>
               <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-5xl">Rahul Pawar</h1>
-              <p className="mt-3 max-w-3xl text-sm leading-6 text-neutral-700 dark:text-neutral-300 sm:text-base">Senior iOS engineer leading mobile platform delivery, SwiftUI architecture, App Store releases, and AI-assisted developer workflows across iOS, macOS, Android, and backend teams.</p>
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-neutral-700 dark:text-neutral-300 sm:text-base">Senior iOS engineer leading mobile delivery, SwiftUI migration, App Store releases, cross-platform features, and AI-assisted developer workflows across iOS, Android, web, and backend teams.</p>
               <div className="mt-3 flex flex-wrap gap-3">
                 <a href={RESUME_URL} target="_blank" rel="noreferrer" className="rounded-full bg-neutral-950 px-4 py-2 text-sm font-medium text-white shadow-lg shadow-neutral-950/20 transition hover:-translate-y-0.5 dark:bg-white dark:text-neutral-950">View Resume</a>
                 <a href={RESUME_URL} download className="rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15">Download PDF</a>
@@ -300,7 +307,7 @@ const certifications = useMemo(() => [
         <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
           <GlassSurface className="rounded-[2rem] border border-white/80 bg-white/75 p-6 shadow-xl shadow-slate-300/30 backdrop-blur-xl dark:border-white/10 dark:bg-white/10 dark:shadow-black/20 sm:p-8">
             <SectionHeader title="Resume" subtitle="Updated from the latest PDF" />
-            <p className="text-sm leading-7 text-neutral-700 dark:text-neutral-300">Focused on senior iOS leadership, SwiftUI migration, AI-assisted engineering workflows, release ownership, cross-platform delivery, and production-quality mobile architecture.</p>
+            <p className="text-sm leading-7 text-neutral-700 dark:text-neutral-300">Focused on senior iOS leadership, SwiftUI migration, release ownership, cross-platform delivery, AI-assisted engineering workflows, and pragmatic production architecture.</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a href={RESUME_URL} target="_blank" rel="noreferrer" className="rounded-full bg-teal-700 px-4 py-2 text-sm font-medium text-white shadow-lg shadow-teal-700/20 transition hover:-translate-y-0.5 dark:bg-teal-300 dark:text-neutral-950">Open resume</a>
               <a href={RESUME_URL} download className="rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15">Download</a>
