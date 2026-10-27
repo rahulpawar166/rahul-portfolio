@@ -1,229 +1,141 @@
 const SVG_NS = "http://www.w3.org/2000/svg";
+let nextID = 0;
 
-let uid = 0;
-let svgDefs = null;
-
-function canUseFilteredBackdrop() {
-  if (typeof window === "undefined" || typeof document === "undefined") {
-    return false;
-  }
-
-  const ua = window.navigator.userAgent;
-  const isSafari = /Safari/.test(ua) && !/Chrome|Chromium|Edg/.test(ua);
-  const isFirefox = /Firefox/.test(ua);
-
-  if (isSafari || isFirefox || !window.CSS?.supports("backdrop-filter", "url(#lg)")) {
-    return false;
-  }
-
-  try {
-    const canvas = document.createElement("canvas");
-    canvas.width = 4;
-    canvas.height = 4;
-    canvas.getContext("2d").getImageData(0, 0, 1, 1);
-    return true;
-  } catch {
-    return false;
-  }
+function svgElement(name, attributes = {}) {
+  const element = document.createElementNS(SVG_NS,name);
+  for(const [key,value] of Object.entries(attributes)) element.setAttribute(key,String(value));
+  return element;
 }
 
-function ensureDefs() {
-  if (svgDefs) return svgDefs;
-
-  const svg = document.createElementNS(SVG_NS, "svg");
-  svg.setAttribute("width", "0");
-  svg.setAttribute("height", "0");
-  svg.setAttribute("aria-hidden", "true");
-  svg.style.position = "absolute";
-  svg.style.pointerEvents = "none";
-
-  svgDefs = document.createElementNS(SVG_NS, "defs");
-  svg.appendChild(svgDefs);
-  document.body.appendChild(svg);
-
-  return svgDefs;
-}
-
-function makeMap(width, height, radius, border, mapBlur) {
+// The signed-distance normal of a rounded rectangle describes the glass bevel.
+// Interior pixels remain neutral; only the convex edge redirects the sample ray.
+function lensMap(width,height,scale,radius) {
   const canvas = document.createElement("canvas");
-  canvas.width = Math.max(1, Math.round(width));
-  canvas.height = Math.max(1, Math.round(height));
-
-  const ctx = canvas.getContext("2d");
-  const gx = ctx.createLinearGradient(0, 0, canvas.width, 0);
-  gx.addColorStop(0, "rgb(0,0,0)");
-  gx.addColorStop(1, "rgb(255,0,0)");
-  ctx.fillStyle = gx;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  const gy = ctx.createLinearGradient(0, 0, 0, canvas.height);
-  gy.addColorStop(0, "rgb(0,0,0)");
-  gy.addColorStop(1, "rgb(0,0,255)");
-  ctx.globalCompositeOperation = "difference";
-  ctx.fillStyle = gy;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.globalCompositeOperation = "source-over";
-
-  const inset = border * Math.min(canvas.width, canvas.height);
-  ctx.filter = `blur(${mapBlur}px)`;
-  ctx.fillStyle = "rgba(128,128,128,0.93)";
-  ctx.beginPath();
-  ctx.roundRect(
-    inset,
-    inset,
-    canvas.width - inset * 2,
-    canvas.height - inset * 2,
-    Math.max(radius - inset, 2),
-  );
-  ctx.fill();
-  ctx.filter = "none";
-
+  canvas.width=width; canvas.height=height;
+  const context=canvas.getContext("2d");
+  const pixels=context.createImageData(width,height);
+  const bevel=Math.min(16,height*.25);
+  for(let y=0;y<height;y++) {
+    for(let x=0;x<width;x++) {
+      const px=x+.5-width/2, py=y+.5-height/2;
+      const qx=Math.abs(px)-(width/2-radius), qy=Math.abs(py)-(height/2-radius);
+      const ox=Math.max(qx,0), oy=Math.max(qy,0);
+      const length=Math.hypot(ox,oy);
+      const distance=-(length+Math.min(Math.max(qx,qy),0)-radius);
+      let nx=0,ny=0;
+      if(length>0) { nx=Math.sign(px)*ox/length; ny=Math.sign(py)*oy/length; }
+      else if(qx>qy) nx=Math.sign(px);
+      else ny=Math.sign(py);
+      const edge=Math.max(0,Math.min(1,1-distance/bevel));
+      const bend=distance>=0 ? Math.sin(edge*Math.PI/2)**2*10 : 0;
+      const offset=(y*width+x)*4;
+      pixels.data[offset]=Math.round((.5-nx*bend/scale)*255);
+      pixels.data[offset+1]=Math.round((.5-ny*bend/scale)*255);
+      pixels.data[offset+2]=128;
+      pixels.data[offset+3]=255;
+    }
+  }
+  context.putImageData(pixels,0,0);
   return canvas.toDataURL();
 }
 
-function buildFilter(id, scales) {
-  const filter = document.createElementNS(SVG_NS, "filter");
-  filter.setAttribute("id", id);
-  filter.setAttribute("x", "0");
-  filter.setAttribute("y", "0");
-  filter.setAttribute("width", "100%");
-  filter.setAttribute("height", "100%");
-  filter.setAttribute("color-interpolation-filters", "sRGB");
+export function liquidGlass(element,{sourceSelector=".rp-portfolio main"}={}) {
+  if(!element) return {destroy(){}};
+  const surface=element.parentElement;
+  const id=`optical-glass-${++nextID}`;
+  const svg=svgElement("svg",{width:0,height:0,"aria-hidden":"true"});
+  svg.style.position="absolute"; svg.style.pointerEvents="none";
+  const defs=svgElement("defs");
+  const filter=svgElement("filter",{id,filterUnits:"userSpaceOnUse",primitiveUnits:"userSpaceOnUse",x:0,y:0,"color-interpolation-filters":"sRGB"});
+  const map=svgElement("feImage",{result:"lens",preserveAspectRatio:"none",x:0,y:0});
+  const bend=svgElement("feDisplacementMap",{in:"SourceGraphic",in2:"lens",scale:28,xChannelSelector:"R",yChannelSelector:"G",result:"refracted"});
+  const polish=svgElement("feGaussianBlur",{in:"refracted",stdDeviation:.55,result:"polished"});
+  const color=svgElement("feColorMatrix",{in:"polished",type:"saturate",values:1.25});
+  filter.append(map,bend,polish,color); defs.append(filter); svg.append(defs); document.body.append(svg);
 
-  const feImage = document.createElementNS(SVG_NS, "feImage");
-  feImage.setAttribute("x", "0");
-  feImage.setAttribute("y", "0");
-  feImage.setAttribute("result", "map");
-  feImage.setAttribute("preserveAspectRatio", "none");
-  filter.appendChild(feImage);
-
-  const channelMatrices = [
-    "1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0",
-    "0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0",
-    "0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0",
-  ];
-  const channels = [];
-
-  for (let index = 0; index < 3; index += 1) {
-    const displacement = document.createElementNS(SVG_NS, "feDisplacementMap");
-    displacement.setAttribute("in", "SourceGraphic");
-    displacement.setAttribute("in2", "map");
-    displacement.setAttribute("scale", scales[index]);
-    displacement.setAttribute("xChannelSelector", "R");
-    displacement.setAttribute("yChannelSelector", "B");
-    displacement.setAttribute("result", `d${index}`);
-    filter.appendChild(displacement);
-
-    const colorMatrix = document.createElementNS(SVG_NS, "feColorMatrix");
-    colorMatrix.setAttribute("in", `d${index}`);
-    colorMatrix.setAttribute("type", "matrix");
-    colorMatrix.setAttribute("values", channelMatrices[index]);
-    colorMatrix.setAttribute("result", `c${index}`);
-    filter.appendChild(colorMatrix);
-    channels.push(`c${index}`);
+  // SVG backdrop filters are not consistently implemented in WebKit/Gecko.
+  // Their fallback refracts an inert, scroll-aligned rendering of the same scene
+  // through a regular SVG filter. No canvas screenshot or remote texture is used.
+  const agent=navigator.userAgent;
+  const nativeBackdrop=CSS.supports("backdrop-filter",`url(#${id})`) && /Chrome|Chromium|Edg\//.test(agent);
+  let scene=null,source=null,mutation=null;
+  let frame=0,rebuildFrame=0;
+  let destroyed=false;
+  if(nativeBackdrop) {
+    element.style.backdropFilter=`url(#${id})`;
+    element.dataset.refraction="svg-backdrop";
+  } else {
+    element.style.filter=`url(#${id})`;
+    element.dataset.refraction="svg-scene";
+    scene=document.createElement("div");
+    scene.className="optical-glass-scene";
+    scene.setAttribute("inert",""); scene.setAttribute("aria-hidden","true");
+    element.append(scene);
   }
 
-  const blend1 = document.createElementNS(SVG_NS, "feBlend");
-  blend1.setAttribute("in", channels[0]);
-  blend1.setAttribute("in2", channels[1]);
-  blend1.setAttribute("mode", "screen");
-  blend1.setAttribute("result", "c01");
-  filter.appendChild(blend1);
-
-  const blend2 = document.createElementNS(SVG_NS, "feBlend");
-  blend2.setAttribute("in", "c01");
-  blend2.setAttribute("in2", channels[2]);
-  blend2.setAttribute("mode", "screen");
-  filter.appendChild(blend2);
-
-  ensureDefs().appendChild(filter);
-  return { filter, feImage };
-}
-
-function resolveRadius(element, width, height, override) {
-  if (override != null) return override;
-
-  const raw = getComputedStyle(element).borderTopLeftRadius || "0px";
-  const value = parseFloat(raw) || 0;
-
-  return raw.trim().endsWith("%") ? (value / 100) * Math.min(width, height) : value;
-}
-
-export function liquidGlass(element, options = {}) {
-  const opts = {
-    scale: -112,
-    chroma: 6,
-    border: 0.07,
-    mapBlur: 12,
-    blur: 3,
-    saturate: 1.5,
-    radius: null,
-    fallbackBlur: 26,
-    ...options,
-  };
-
-  if (!element) {
-    return { supported: false, refresh() {}, destroy() {} };
+  function syncPosition() {
+    frame=0;
+    if(!scene || !source || destroyed) return;
+    const rect=surface.getBoundingClientRect();
+    const sourceRect=source.getBoundingClientRect();
+    scene.style.width=`${document.documentElement.clientWidth}px`;
+    scene.style.transform=`translate3d(${-rect.left}px,${sourceRect.top-rect.top}px,0)`;
   }
-
-  if (!canUseFilteredBackdrop()) {
-    const fallback = `blur(${opts.fallbackBlur}px) saturate(${opts.saturate})`;
-    element.style.backdropFilter = fallback;
-    element.style.webkitBackdropFilter = fallback;
-    element.classList.add("liquid-glass-fallback");
-
-    return {
-      supported: false,
-      refresh() {},
-      destroy() {
-        element.style.backdropFilter = "";
-        element.style.webkitBackdropFilter = "";
-        element.classList.remove("liquid-glass-fallback");
-      },
-    };
+  function queuePosition() { if(!frame) frame=requestAnimationFrame(syncPosition); }
+  function rebuildScene() {
+    rebuildFrame=0;
+    if(!scene || destroyed) return;
+    source=document.querySelector(sourceSelector);
+    if(!source) return;
+    const clone=source.cloneNode(true);
+    clone.removeAttribute("id");
+    for(const node of clone.querySelectorAll("[id]")) node.removeAttribute("id");
+    for(const dialog of clone.querySelectorAll("dialog")) dialog.remove();
+    // Reveal animations belong to the page, not to its optical reflection.
+    for(const node of [clone,...clone.querySelectorAll("[style]")]) {
+      node.style.removeProperty("opacity"); node.style.removeProperty("transform");
+    }
+    for(const image of clone.querySelectorAll("img")) image.loading="eager";
+    scene.replaceChildren(clone);
+    syncPosition();
   }
-
-  const id = `liquid-glass-filter-${++uid}`;
-  const filterParts = buildFilter(id, [
-    opts.scale,
-    opts.scale + opts.chroma,
-    opts.scale + opts.chroma * 2,
-  ]);
-
-  function refresh() {
-    const width = element.offsetWidth;
-    const height = element.offsetHeight;
-    if (!width || !height) return;
-
-    const radius = resolveRadius(element, width, height, opts.radius);
-    filterParts.feImage.setAttribute("href", makeMap(width, height, radius, opts.border, opts.mapBlur));
-    filterParts.feImage.setAttribute("width", width);
-    filterParts.feImage.setAttribute("height", height);
+  function queueRebuild() { if(!rebuildFrame) rebuildFrame=requestAnimationFrame(rebuildScene); }
+  function resize() {
+    const width=Math.round(element.offsetWidth),height=Math.round(element.offsetHeight);
+    if(!width || !height || destroyed) return;
+    filter.setAttribute("width",width); filter.setAttribute("height",height);
+    map.setAttribute("width",width); map.setAttribute("height",height);
+    const radius=Math.min(width/2,height/2,parseFloat(getComputedStyle(surface).borderTopLeftRadius) || height/2);
+    map.setAttribute("href",lensMap(width,height,28,radius));
+    if(scene) rebuildScene();
   }
-
-  refresh();
-  const filter = `url(#${id}) blur(${opts.blur}px) saturate(${opts.saturate})`;
-  element.style.backdropFilter = filter;
-  element.style.webkitBackdropFilter = filter;
-  element.classList.add("liquid-glass-supported");
-
-  let timer = null;
-  const resizeObserver = new ResizeObserver(() => {
-    clearTimeout(timer);
-    timer = setTimeout(refresh, 120);
-  });
-  resizeObserver.observe(element);
-
-  return {
-    supported: true,
-    refresh,
-    destroy() {
-      resizeObserver.disconnect();
-      clearTimeout(timer);
-      filterParts.filter.remove();
-      element.style.backdropFilter = "";
-      element.style.webkitBackdropFilter = "";
-      element.classList.remove("liquid-glass-supported");
-    },
-  };
+  function pointer(event) {
+    const rect=surface.getBoundingClientRect();
+    surface.style.setProperty("--glass-light-x",`${(event.clientX-rect.left)/rect.width*100}%`);
+    surface.style.setProperty("--glass-light-y",`${(event.clientY-rect.top)/rect.height*100}%`);
+  }
+  function resetPointer() {
+    surface.style.removeProperty("--glass-light-x"); surface.style.removeProperty("--glass-light-y");
+  }
+  const observer=new ResizeObserver(resize); observer.observe(surface);
+  if(scene) {
+    rebuildScene();
+    if(source) { mutation=new MutationObserver(queueRebuild); mutation.observe(source,{subtree:true,childList:true,characterData:true}); }
+    window.addEventListener("scroll",queuePosition,{passive:true});
+    window.addEventListener("resize",queuePosition,{passive:true});
+    source?.addEventListener("toggle",queueRebuild,true);
+    source?.addEventListener("load",queuePosition,true);
+  }
+  surface.addEventListener("pointermove",pointer,{passive:true});
+  surface.addEventListener("pointerleave",resetPointer,{passive:true});
+  resize();
+  return {destroy() {
+    destroyed=true; observer.disconnect(); mutation?.disconnect();
+    cancelAnimationFrame(frame); cancelAnimationFrame(rebuildFrame);
+    window.removeEventListener("scroll",queuePosition); window.removeEventListener("resize",queuePosition);
+    source?.removeEventListener("toggle",queueRebuild,true); source?.removeEventListener("load",queuePosition,true);
+    surface.removeEventListener("pointermove",pointer); surface.removeEventListener("pointerleave",resetPointer);
+    resetPointer(); scene?.remove(); svg.remove();
+    element.style.backdropFilter=""; element.style.filter=""; delete element.dataset.refraction;
+  }};
 }

@@ -4,6 +4,7 @@ import { choreQuestFeatures } from "./ChoreQuestFeatures";
 import "./ChoreQuestFeature.css";
 import "./ChoreQuestPage.css";
 import IPhoneMockup from "./IPhoneMockup";
+import OpticalGlass from "./OpticalGlass";
 
 const problems = [
   ["01", "The reminder loop", "A chore is easy to forget when the next step is unclear. Parents end up keeping the list in their heads and asking again."],
@@ -44,7 +45,8 @@ export default function ChoreQuestPage() {
   return (
     <div className="cq-story">
       <a className="cq-skip-link" href="#cq-main">Skip to content</a>
-      <header className="cq-story-nav">
+      <header className="cq-story-nav optical-nav">
+        <OpticalGlass sourceSelector=".cq-story main"/>
         <a className="cq-story-brand" href="/chorequest/" aria-label="ChoreQuest home"><img src="/images/chorequest/app-icon.png" width="36" height="36" alt="" /><span>ChoreQuest</span></a>
         <nav aria-label="ChoreQuest page"><a href="#mission">Mission</a><a href="#how-it-works">How it works</a><a href="#features">Features</a><a href="/#chorequest">Portfolio</a></nav>
         <button className="cq-story-theme" onClick={() => setIsDark(value => !value)} aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"} aria-pressed={isDark} type="button">{isDark ? "☀" : "☾"}</button>
