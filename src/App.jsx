@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
+import ChoreQuestFeature from "./ChoreQuestFeature";
+
 import emailjs from '@emailjs/browser';
 import { liquidGlass } from "./liquidGlass";
 
@@ -97,11 +99,11 @@ export default function PortfolioAppleStyle() {
 
   const featuredProjects = useMemo(() => [
     {
-      name: "ChoreQuest",
-      type: "iOS app",
+      name: "ChoreQuest: Family Adventure",
+      type: "iOS app · Coming soon",
       description: "A SwiftUI app that gamifies family chores. Parents create quests and approve completed work, kids track rewards on their own dashboard, and family profiles are backed by Firebase.",
       tags: ["SwiftUI", "iOS", "Firebase", "Family"],
-      link: "https://github.com/rahulpawar166",
+      link: "/chorequest/",
     },
     {
       name: "RestSync",
@@ -238,6 +240,7 @@ const certifications = useMemo(() => [
           </div>
           <nav className="order-3 flex w-full items-center gap-4 overflow-x-auto whitespace-nowrap pb-1 text-xs opacity-80 sm:order-none sm:w-auto sm:gap-6 sm:overflow-visible sm:pb-0 sm:text-sm">
             <a href="#resume" className="hover:opacity-100">Resume</a>
+            <a href="#chorequest" className="hover:opacity-100">ChoreQuest</a>
             <a href="#writing" className="hover:opacity-100">Writing</a>
             <a href="#experience" className="hover:opacity-100">Experience</a>
             <a href="#projects" className="hover:opacity-100">Projects</a>
@@ -324,7 +327,9 @@ const certifications = useMemo(() => [
         </div>
       </section>
 
-      {/* 1) WRITING FIRST — CAROUSEL */}
+      <ChoreQuestFeature />
+
+      {/* WRITING — CAROUSEL */}
       <section id="writing" className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
         <SectionHeader title="Writing" subtitle="Fresh takes on Swift, SwiftUI & shipping delightful apps" />
         {articleError && <InlineNote text={`Medium fetch issue: ${articleError}. Using a lightweight fallback.`} />}
@@ -390,8 +395,8 @@ const certifications = useMemo(() => [
               as="a"
               key={project.name}
               href={project.link}
-              target="_blank"
-              rel="noreferrer"
+              target={project.link.startsWith("#") ? undefined : "_blank"}
+              rel={project.link.startsWith("#") ? undefined : "noreferrer"}
               className="group rounded-[1.75rem] border border-white/80 bg-white/75 p-6 shadow-xl shadow-slate-300/25 backdrop-blur-xl transition hover:-translate-y-1 dark:border-white/10 dark:bg-white/10 dark:shadow-black/20"
             >
               <p className="text-xs font-medium uppercase tracking-[0.2em] text-teal-700 dark:text-teal-300">{project.type}</p>

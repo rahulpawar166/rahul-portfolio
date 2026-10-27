@@ -1,0 +1,19 @@
+/* Body: 78.0 × 163.4 mm. Display: 1320 × 2868 px.
+   Source: https://www.apple.com/iphone-18-pro/specs/ */
+.cq-device { position:relative; display:block; width:100%; container-type:inline-size; isolation:isolate; }
+.cq-device-body { position:relative; display:grid; width:100%; height:209.487cqw; box-sizing:border-box; padding:3.2cqw; border:.35cqw solid #747478; border-radius:16cqw; background:linear-gradient(100deg,#99999d 0%,#38383c .8%,#0a0a0c 2%,#050506 97.5%,#48484d 99.2%,#a1a1a5 100%); box-shadow:0 8cqw 18cqw #0005,inset .35cqw 0 .25cqw #e8e8eb88,inset -.35cqw 0 .25cqw #e8e8eb55,inset 0 .35cqw .25cqw #fff9,inset 0 -.35cqw .25cqw #ffffff30; }
+.cq-device-body::before,.cq-device-body::after { content:""; position:absolute; left:-.35cqw; right:-.35cqw; height:.6cqw; border-inline:.8cqw solid #111114; pointer-events:none; }
+.cq-device-body::before { top:13cqw; }
+.cq-device-body::after { bottom:13cqw; }
+.cq-device-screen { position:relative; display:block; min-height:0; overflow:hidden; border-radius:12.8cqw; background:#f6f2ff; box-shadow:0 0 0 .45cqw #000; }
+.cq-device .cq-device-screen > img { display:block; width:100%; height:100%; max-width:none; aspect-ratio:auto; object-fit:cover; border:0; border-radius:0; margin:0; padding:0; }
+.cq-device-island { position:absolute; z-index:2; top:3.2cqw; left:50%; width:22cqw; height:8.1cqw; border-radius:8cqw; transform:translateX(-50%); background:#030304; box-shadow:inset 0 0 0 .2cqw #18181b,0 .2cqw .4cqw #0002; pointer-events:none; }
+.cq-device-camera { position:absolute; top:50%; right:1.8cqw; width:2.9cqw; height:2.9cqw; transform:translateY(-50%); border:.3cqw solid #101118; border-radius:50%; background:radial-gradient(circle at 35% 30%,#32436d 0%,#162440 20%,#080d17 48%,#030407 72%); box-shadow:inset 0 0 .4cqw #000; }
+.cq-device-home-indicator { position:absolute; z-index:2; bottom:1.9cqw; left:50%; width:32cqw; height:1.1cqw; transform:translateX(-50%); border-radius:2cqw; background:#15111c; opacity:.8; pointer-events:none; }
+.cq-device-key { position:absolute; z-index:-1; display:block; left:-.8cqw; width:1.2cqw; border:.15cqw solid #7e7e84; border-radius:.7cqw 0 0 .7cqw; background:linear-gradient(90deg,#95959c,#333338 70%,#111114); box-shadow:-.15cqw .2cqw .5cqw #0004; pointer-events:none; }
+.cq-device-action { top:18%; height:4.2%; }
+.cq-device-volume-up { top:27%; height:7.8%; }
+.cq-device-volume-down { top:37%; height:7.8%; }
+.cq-device-power,.cq-device-camera-control { left:auto; right:-.8cqw; border-radius:0 .7cqw .7cqw 0; background:linear-gradient(90deg,#111114,#49494f 55%,#9999a0); }
+.cq-device-power { top:29%; height:11.6%; }
+.cq-device-camera-control { top:62%; height:7.5%; border-color:#52525a; background:linear-gradient(90deg,#161619,#44444a); }

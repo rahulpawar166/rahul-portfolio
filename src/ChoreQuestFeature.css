@@ -1,0 +1,62 @@
+.cq-section { position: relative; scroll-margin-top: 5rem; }
+.cq-showcase { position: relative; overflow: hidden; border: 1px solid #ffffff24; border-radius: 2rem; background: radial-gradient(ellipse at 85% 12%, #7648ac66, transparent 48%), radial-gradient(ellipse at 8% 75%, #562a8466, transparent 52%), #1c132e; color: #faf6ff; box-shadow: 0 28px 80px #23103d30; }
+.cq-showcase::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .3; background-image: radial-gradient(#d0b5f34d 1px, transparent 1px); background-size: 28px 28px; mask-image: linear-gradient(180deg, transparent, #000); }
+.cq-intro { position: relative; z-index: 1; padding: 2.5rem 3rem 0; }
+.cq-topline { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2.5rem; }
+.cq-eyebrow { font-size: .68rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: #e2c8ff; }
+.cq-platform { display: inline-flex; align-items: center; gap: .8rem; padding: .45rem .8rem; border: 1px solid #ffffff26; border-radius: 999px; color: #e8dcf3; font-size: .72rem; }
+.cq-heading-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 1.5rem; }
+.cq-heading-row h2 { margin: 0; font-size: clamp(2rem, 8vw, 4.4rem); font-weight: 650; line-height: 1; letter-spacing: -.055em; }
+.cq-heading-row h2 > span:not(.sr-only) { display: block; margin-top: .65rem; color: #dbbeff; font-size: .37em; font-weight: 450; letter-spacing: -.01em; }
+.cq-tagline { margin-top: 1.8rem; font-size: clamp(1.25rem, 3vw, 1.9rem); font-weight: 500; line-height: 1.35; letter-spacing: -.03em; }
+.cq-tagline em { font-style: normal; color: #ffdf91; }
+.cq-app-icon { flex-shrink: 0; width: 112px; height: 112px; border-radius: 26%; box-shadow: 0 12px 40px #0005, 0 0 0 1px #ffffff26; transform: rotate(8deg); }
+.cq-description { max-width: 650px; margin-top: 1.25rem; color: #d6c9e6; font-size: .95rem; line-height: 1.8; }
+.cq-details { display: flex; flex-wrap: wrap; column-gap: 2rem; row-gap: .7rem; margin-top: 1.5rem; font-size: .78rem; color: #eee4f9; }
+.cq-details span { margin-right: .4rem; color: #ffdf91; }
+.cq-gallery { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; align-items: start; padding: 3.5rem 5.5rem 2rem; }
+.cq-shot { min-width: 0; margin: 0; }
+.cq-shot-0 { transform: rotate(-5deg) translateY(1.2rem); }
+.cq-shot-2 { transform: rotate(5deg) translateY(1.2rem); }
+.cq-phone { position:relative; display:block; width:100%; padding:0; border:0; border-radius:16% / 7.64%; background:transparent; cursor:zoom-in; transition:transform .25s ease; }
+.cq-phone:hover { transform:translateY(-8px); }
+.cq-phone:focus-visible, .cq-dialog button:focus-visible { outline: 3px solid #ffdf91; outline-offset: 5px; }
+.cq-shot figcaption { margin-top: 1.3rem; text-align: center; }
+.cq-shot figcaption > span { font-size: .8rem; font-weight: 600; color: #f4eafa; }
+.cq-shot figcaption p { margin-top: .35rem; color: #beacd0; font-size: .7rem; line-height: 1.6; }
+.cq-footer { position: relative; display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin: 2rem 3rem 0; padding: 1.4rem 0; border-top: 1px solid #ffffff1c; font-size: .72rem; color: #dbcbe9; }
+.cq-footer > p:first-child { display: flex; align-items: center; gap: .55rem; }
+.cq-status-dot { width: 6px; height: 6px; border-radius: 50%; background: #ffdf91; box-shadow: 0 0 12px #ffdf9166; }
+.cq-stack { color: #bba7d0; }
+.cq-stack span { padding: 0 .35rem; }
+.cq-orbit { position: absolute; width: 42rem; height: 42rem; border: 1px solid #c79de51c; border-radius: 50%; pointer-events: none; }
+.cq-orbit-one { right: -22rem; top: 6rem; }
+.cq-orbit-two { right: -26rem; top: 2rem; width: 50rem; height: 50rem; }
+.cq-dialog { width:min(92vw,470px); max-width: min(92vw, 470px); max-height: 94dvh; padding: 1rem; border: 1px solid #dbc4f23d; border-radius: 1.5rem; background: #21162f; color: #faf6ff; box-shadow: 0 25px 100px #0008; }
+.cq-dialog::backdrop { background: #110b1de6; backdrop-filter: blur(10px); }
+.cq-dialog-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .8rem; }
+.cq-dialog-bar h3 { font-size: .9rem; font-weight: 600; }
+.cq-dialog-bar button { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: #ffffff15; }
+.cq-demo-note { margin: .8rem 0 0; text-align: center; font-size: .7rem; color: #c7b6d7; }
+@media (max-width: 767px) {
+  .cq-intro { padding: 1.6rem 1.5rem 0; }
+  .cq-topline { margin-bottom: 2rem; }
+  .cq-platform { font-size: .65rem; gap: .4rem; }
+  .cq-eyebrow { font-size: .58rem; letter-spacing: .1em; }
+  .cq-app-icon { width: 70px; height: 70px; }
+  .cq-description { font-size: .87rem; }
+  .cq-details { gap: .7rem 1rem; font-size: .7rem; }
+  .cq-gallery { display: flex; gap: 1.2rem; padding: 2rem 1.5rem 1rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: #9570b3 transparent; }
+  .cq-shot { flex: 0 0 min(65vw, 240px); transform: none; scroll-snap-align: center; }
+  .cq-shot figcaption { margin-top: 1rem; }
+  .cq-footer { flex-direction: column; align-items: flex-start; margin: 1.5rem 1.5rem 0; gap: .5rem; }
+}
+@media (prefers-reduced-motion: reduce) { .cq-phone { transition: none; } .cq-phone:hover { transform: none; } }
+
+@media (max-width: 380px) { .cq-heading-row { gap: 1rem; } .cq-app-icon { width: 54px; height: 54px; } .cq-topline { flex-wrap: wrap; } }
+
+.cq-explore-button { display:inline-flex; align-items:center; justify-content:center; gap:1.5rem; margin-top:1.5rem; min-height:46px; padding:.8rem 1.25rem; border:1px solid #ffe3a1; border-radius:999px; color:#2c1a13; background:#ffdf91; font-size:.82rem; font-weight:650; box-shadow:0 8px 24px #0002; transition:transform .2s,background .2s; }
+.cq-explore-button:hover { transform:translateY(-3px); background:#ffe9b3; }
+.cq-explore-button:focus-visible { outline:3px solid #ffdf91; outline-offset:5px; }
+@media (prefers-reduced-motion:reduce) { .cq-explore-button { transition:none; } .cq-explore-button:hover { transform:none; } }
+.cq-dialog-device { width:min(100%,calc((94dvh - 8rem) * .47736)); margin-inline:auto; }
