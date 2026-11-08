@@ -36,7 +36,7 @@ export default function ChoreQuestFeature() {
             <img className="cq-app-icon" src="/images/chorequest/app-icon.png" alt="ChoreQuest app icon" width="112" height="112" loading="lazy" />
           </div>
           <p className="cq-description">A family adventure built around helping out. Parents turn routines into quests. Kids earn XP, work toward rewards, and discover how much they can accomplish together.</p>
-          <div className="cq-launch-actions"><a className="cq-explore-button" href={choreQuestAppStoreURL}>Download on the App Store <span aria-hidden="true">↗</span></a><a className="cq-launch-details" href="/chorequest/">Explore ChoreQuest <span aria-hidden="true">→</span></a></div>
+          <div className="cq-launch-actions"><a className="cq-explore-button" href={choreQuestAppStoreURL}>Download on the App Store <span aria-hidden="true">↗</span></a><a className="cq-launch-details" href="https://schnelllabs.com/chorequest/" target="_blank" rel="noopener noreferrer">Explore ChoreQuest <span aria-hidden="true">→</span></a></div>
           <p className="cq-launch-note">Free to download · Optional Premium subscription · iOS / iPadOS 27.0 or later</p>
           <div className="cq-details">
             <p><span aria-hidden="true">✦</span> Quests with purpose</p>
