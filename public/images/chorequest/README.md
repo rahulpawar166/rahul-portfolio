@@ -8,7 +8,7 @@ The three screenshots are captured from the native SwiftUI app on an iPhone 17 P
 - Rewards: Choose movie night, Ice cream outing, A trip to the park
 - Shared goal: Family adventure day
 
-`parent.webp`, `hero.webp`, and `rewards.webp` are optimized captures. `app-icon.png` comes from the app's release icon asset. The portfolio labels the app as coming soon; add the verified App Store link when it is released.
+`parent.webp`, `hero.webp`, and `rewards.webp` are optimized captures. `app-icon.png` comes from the app's release icon asset. The app is live on the App Store: https://apps.apple.com/us/app/chorequest-family-adventures/id6826944091. `app-store-qr.png` is the original QR code supplied by Rahul for the launch, preserved without edits.
 
 ## Presentation frame
 

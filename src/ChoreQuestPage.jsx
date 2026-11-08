@@ -4,6 +4,8 @@ import { choreQuestFeatures } from "./ChoreQuestFeatures";
 import "./ChoreQuestFeature.css";
 import "./ChoreQuestPage.css";
 import IPhoneMockup from "./IPhoneMockup";
+import ChoreQuestDownload from "./ChoreQuestDownload";
+import { choreQuestAppStoreURL } from "./choreQuestApp";
 import OpticalGlass from "./OpticalGlass";
 
 const problems = [
@@ -55,10 +57,11 @@ export default function ChoreQuestPage() {
       <main id="cq-main">
         <section className="cq-story-hero cq-story-container" aria-labelledby="cq-story-title">
           <Reveal className="cq-story-hero-copy">
-            <p className="cq-story-eyebrow">ChoreQuest: Family Adventure <span>Coming soon on iOS</span></p>
+            <p className="cq-story-eyebrow">ChoreQuest: Family Adventures <span>Available now for iPhone & iPad</span></p>
             <h1 id="cq-story-title">Little chores.<br />Big adventures.<br /><em>Stronger together.</em></h1>
             <p className="cq-story-lead">A little helping hand can mean a lot. ChoreQuest turns everyday responsibilities into quests, gives effort a moment of recognition, and brings the family along for the adventure.</p>
-            <div className="cq-story-actions"><a className="cq-story-button" href="#how-it-works">See how it works <span aria-hidden="true">↓</span></a><a className="cq-story-text-link" href="#features">Explore all {featureCount} features</a></div>
+            <div className="cq-story-actions"><a className="cq-story-button" href={choreQuestAppStoreURL}>Download on the App Store <span aria-hidden="true">↗</span></a><a className="cq-story-text-link" href="#features">Explore all {featureCount} features</a></div>
+            <p className="cq-story-availability">Free to download · Optional Premium subscription<br />Requires iOS / iPadOS 27.0 or later.</p>
             <p className="cq-story-byline">Designed and built by Rahul Pawar · Native iOS · SwiftUI</p>
           </Reveal>
           <Reveal className="cq-story-hero-art" delay={0.15}>
@@ -93,7 +96,7 @@ export default function ChoreQuestPage() {
         </section>
 
         <section id="features" className="cq-story-container cq-story-section" aria-labelledby="features-title">
-          <Reveal className="cq-story-section-heading"><p className="cq-story-eyebrow">The complete feature collection</p><h2 id="features-title">A family adventure.<br /><em>Thought through, little by little.</em></h2><p>Explore {featureCount} features across family setup, everyday chores, rewards, progress, and the details that keep everything running smoothly. Premium features are marked below.</p></Reveal>
+          <Reveal className="cq-story-section-heading"><p className="cq-story-eyebrow">The complete feature collection</p><h2 id="features-title">A family adventure.<br /><em>Thought through, little by little.</em></h2><p>Explore {featureCount} features across family setup, everyday chores, rewards, progress, and the details that keep everything running smoothly. Start free with 1 active hero, 5 active chores, and 2 active personal rewards. Optional monthly or yearly Premium removes these limits for the purchasing owner’s account and unlocks history and progress insights. Premium access is not shared with separate invited-parent or paired-child accounts. Premium features are marked below.</p></Reveal>
           <div className="cq-story-feature-filters" role="group" aria-label="Filter features by category"><button type="button" aria-pressed={category === "all"} onClick={() => setCategory("all")}>All features</button>{choreQuestFeatures.map(group => <button type="button" key={group.id} aria-pressed={category === group.id} onClick={() => setCategory(group.id)}>{({family:"Family",quests:"Quests",encouragement:"Encouragement",rewards:"Rewards",everyday:"Everyday life",insights:"Premium",privacy:"Privacy & access",personalize:"Personal touches"})[group.id]}</button>)}</div>
           <p className="cq-story-feature-status" role="status">{visibleGroups.reduce((count, group) => count + group.features.length, 0)} features · {category === "all" ? "All categories" : visibleGroups[0].title}</p>
           <Motion.div layout={!reduced} className="cq-story-feature-grid"><AnimatePresence mode="popLayout" initial={false}>{visibleGroups.map(group => <Motion.article layout={!reduced} key={group.id} className="cq-story-feature-group" initial={reduced ? false : { opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }} exit={{ opacity:0, y:reduced ? 0 : -8 }} viewport={{ once:true, amount:0.05 }} transition={{ duration:reduced ? 0 : 0.3 }}><div className="cq-story-feature-group-heading"><span className="cq-story-feature-symbol" aria-hidden="true">{group.symbol}</span>{group.premium && <span className="cq-story-premium">Premium</span>}</div><h3>{group.title}</h3><ul>{group.features.map(([title, description]) => <li key={title}><h4>{title}</h4><p>{description}</p></li>)}</ul></Motion.article>)}</AnimatePresence></Motion.div>
@@ -101,9 +104,9 @@ export default function ChoreQuestPage() {
 
         <section className="cq-story-container cq-story-section" aria-labelledby="principles-title"><Reveal className="cq-story-principles"><p className="cq-story-eyebrow">The heart of the experience</p><h2 id="principles-title">Room to learn.<br /><em>Reasons to celebrate.</em></h2><div><article><h3>Clarity before reminders</h3><p>A child should be able to see what needs doing, what finished looks like, and what happens next.</p></article><article><h3>Encouragement at every step</h3><p>Helpful feedback and recognition make space for learning, asking for help, and trying again.</p></article><article><h3>Rewards with meaning</h3><p>Families choose the moments they want to work toward, from a small personal treat to a shared adventure.</p></article></div></Reveal></section>
 
-        <section className="cq-story-container cq-story-section cq-story-closing" aria-labelledby="closing-title"><Reveal><img src="/images/chorequest/app-icon.png" width="80" height="80" alt="ChoreQuest app icon" loading="lazy" /><p className="cq-story-eyebrow">The next adventure is almost here</p><h2 id="closing-title">A little helping hand.<br /><em>A whole lot of possibility.</em></h2><p>ChoreQuest: Family Adventure is coming soon to iOS.</p><a className="cq-story-button" href="/#chorequest">Back to Rahul's portfolio <span aria-hidden="true">←</span></a></Reveal></section>
+        <section className="cq-story-container cq-story-section cq-story-closing" aria-labelledby="closing-title"><Reveal><img src="/images/chorequest/app-icon.png" width="80" height="80" alt="ChoreQuest app icon" loading="lazy" /><p className="cq-story-eyebrow">Your next family adventure starts today</p><h2 id="closing-title">A little helping hand.<br /><em>A whole lot of possibility.</em></h2><p>ChoreQuest: Family Adventures is now available on the App Store. Create your first quest and celebrate a little win together.</p><a className="cq-story-button" href={choreQuestAppStoreURL}>Download on the App Store <span aria-hidden="true">↗</span></a><ChoreQuestDownload /><p className="cq-story-download-note">Your family chooses and provides rewards. XP has no cash value.<br />An account and internet connection are required for shared actions.</p><div className="cq-story-resource-links"><a href="https://rahulpawar166.github.io/chorequest-site/support/">Support</a><a href="https://rahulpawar166.github.io/chorequest-site/privacy/">Privacy Policy</a><a href="https://rahulpawar166.github.io/chorequest-site/terms/">Terms of Service</a></div></Reveal></section>
       </main>
-      <footer className="cq-story-page-footer cq-story-container"><span>ChoreQuest: Family Adventure</span><a href="/#chorequest">Designed and built by Rahul Pawar</a><span>Made for little wins.</span></footer>
+      <footer className="cq-story-page-footer cq-story-container"><span>ChoreQuest: Family Adventures</span><a href="/#chorequest">Designed and built by Rahul Pawar</a><span>Made for little wins.</span></footer>
     </div>
   );
 }

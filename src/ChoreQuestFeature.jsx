@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import "./ChoreQuestFeature.css";
+import { choreQuestAppStoreURL } from "./choreQuestApp";
 import IPhoneMockup from "./IPhoneMockup";
 
 const screens = [
@@ -24,18 +25,19 @@ export default function ChoreQuestFeature() {
         <div className="cq-orbit cq-orbit-two" aria-hidden="true" />
         <div className="cq-intro">
           <div className="cq-topline">
-            <span className="cq-eyebrow">Featured app / Coming soon</span>
-            <span className="cq-platform">Made for iOS</span>
+            <span className="cq-eyebrow">Featured app / Now on the App Store</span>
+            <span className="cq-platform">iPhone & iPad</span>
           </div>
           <div className="cq-heading-row">
             <div>
-              <h2 id="chorequest-title">ChoreQuest<span><span className="sr-only">: </span>Family Adventure</span></h2>
+              <h2 id="chorequest-title">ChoreQuest<span><span className="sr-only">: </span>Family Adventures</span></h2>
               <p className="cq-tagline">Everyday chores.<br /><em>Extraordinary little heroes.</em></p>
             </div>
             <img className="cq-app-icon" src="/images/chorequest/app-icon.png" alt="ChoreQuest app icon" width="112" height="112" loading="lazy" />
           </div>
           <p className="cq-description">A family adventure built around helping out. Parents turn routines into quests. Kids earn XP, work toward rewards, and discover how much they can accomplish together.</p>
-          <a className="cq-explore-button" href="/chorequest/">Explore ChoreQuest <span aria-hidden="true">→</span></a>
+          <div className="cq-launch-actions"><a className="cq-explore-button" href={choreQuestAppStoreURL}>Download on the App Store <span aria-hidden="true">↗</span></a><a className="cq-launch-details" href="/chorequest/">Explore ChoreQuest <span aria-hidden="true">→</span></a></div>
+          <p className="cq-launch-note">Free to download · Optional Premium subscription · iOS / iPadOS 27.0 or later</p>
           <div className="cq-details">
             <p><span aria-hidden="true">✦</span> Quests with purpose</p>
             <p><span aria-hidden="true">✧</span> Rewards worth earning</p>
@@ -55,7 +57,7 @@ export default function ChoreQuestFeature() {
         </div>
 
         <div className="cq-footer">
-          <p><span className="cq-status-dot" aria-hidden="true" /> The next adventure is almost here.</p>
+          <p><span className="cq-status-dot" aria-hidden="true" /> The family adventure starts here. Available now.</p>
           <p className="cq-stack">Built by Rahul <span aria-hidden="true">·</span> SwiftUI <span aria-hidden="true">·</span> Firebase</p>
         </div>
       </div>

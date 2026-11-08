@@ -139,3 +139,12 @@
 }
 @media (max-width:380px) { .cq-story-steps { grid-template-columns:1fr; } .cq-story-hero-art { padding-inline:1rem; } .cq-story-float-one { top:3%; } }
 @media (prefers-reduced-motion:reduce) { .cq-story-hero-phone,.cq-story-float { animation:none; } .cq-story-app-stage > .cq-story-detail-device,.cq-story-button { transition:none; } .cq-story-app-stage:hover > .cq-story-detail-device,.cq-story-button:hover { transform:none; } }
+
+.cq-story-availability { margin-top:1rem; color:var(--cq-muted); font-size:.72rem; }
+.cq-download-qr { display:grid; justify-items:center; gap:1rem; margin:2rem auto 0; }
+.cq-download-qr a { display:block; padding:10px; border-radius:1rem; background:#fff; }
+.cq-story-closing .cq-download-qr img { display:block; width:160px; height:160px; max-width:100%; margin:0; border-radius:0; box-shadow:none; transform:none; }
+.cq-download-qr figcaption { color:var(--cq-muted); font-size:.75rem; line-height:1.8; }
+.cq-story-closing .cq-story-download-note { font-size:.75rem; }
+.cq-story-resource-links { display:flex; flex-wrap:wrap; justify-content:center; gap:1rem 1.5rem; margin-top:1.5rem; font-size:.75rem; }
+.cq-story-resource-links a { color:var(--cq-accent); text-decoration:underline; text-underline-offset:4px; }

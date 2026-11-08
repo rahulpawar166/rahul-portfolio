@@ -60,3 +60,9 @@
 .cq-explore-button:focus-visible { outline:3px solid #ffdf91; outline-offset:5px; }
 @media (prefers-reduced-motion:reduce) { .cq-explore-button { transition:none; } .cq-explore-button:hover { transform:none; } }
 .cq-dialog-device { width:min(100%,calc((94dvh - 8rem) * .47736)); margin-inline:auto; }
+
+.cq-launch-actions { display:flex; flex-wrap:wrap; align-items:center; gap:1rem 1.5rem; margin-top:1.5rem; }
+.cq-launch-actions .cq-explore-button { margin-top:0; }
+.cq-launch-details { padding-block:.75rem; color:#eee4f9; font-size:.82rem; text-decoration:underline; text-underline-offset:4px; }
+.cq-launch-details:focus-visible { outline:3px solid #ffdf91; outline-offset:5px; }
+.cq-launch-note { margin-top:.85rem; color:#d6c9e6; font-size:.72rem; line-height:1.8; }
