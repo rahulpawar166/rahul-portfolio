@@ -6,6 +6,11 @@
       "permanent": true
     },
     {
+      "source": "/chorequest/",
+      "destination": "https://schnelllabs.com/chorequest/",
+      "permanent": true
+    },
+    {
       "source": "/chorequest/:path*",
       "destination": "https://schnelllabs.com/chorequest/:path*",
       "permanent": true
